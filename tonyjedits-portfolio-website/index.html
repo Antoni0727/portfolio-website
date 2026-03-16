@@ -8,6 +8,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="Icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="Icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="Icons/favicon-16x16.png">
+  <link rel="manifest" href="Icons/site.webmanifest">
 </head>
 <body>
 
@@ -277,6 +281,85 @@
     if (shortsLabel) shortsLabel.style.display = showShort ? '' : 'none';
     if (shortsRow) shortsRow.style.display = showShort ? '' : 'none';
   }
+
+  /* COUNT UP ANIMATION */
+  function countUp(el) {
+    const target = el.dataset.target;
+    const isK = target.includes('K');
+    const isPercent = target.includes('%');
+    const isTilde = target.includes('~');
+    const isY = target.includes('y');
+    const num = parseFloat(target.replace(/[^0-9.]/g, ''));
+    const duration = 2200;
+    const start = performance.now();
+
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * num);
+
+      if (isK)           el.textContent = current + 'K+';
+      else if (isPercent) el.textContent = current + '%';
+      else if (isTilde && isY) el.textContent = '~' + current + 'y';
+      else               el.textContent = current + '+';
+
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  const statObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        countUp(e.target);
+        statObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-num').forEach(el => {
+    el.dataset.target = el.textContent.trim();
+    statObs.observe(el);
+  });
+
+  /* STAGGERED VIDEO CARDS */
+  const cardObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const cards = e.target.querySelectorAll('.video-card');
+        cards.forEach((card, i) => {
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, i * 120);
+        });
+        cardObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.video-grid, .shorts-row').forEach(el => {
+    el.querySelectorAll('.video-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+    cardObs.observe(el);
+  });
+
+  /* HIGHLIGHT ANIMATION */
+  const highlightObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('highlighted'), 600);
+        highlightObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.8 });
+
+  document.querySelectorAll('.hero-title em, .about-quote em')
+          .forEach(el => highlightObs.observe(el));
 </script>
 
 </body>
