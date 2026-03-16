@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tony | Video Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-name">Tony | Video Editor</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-identity">
+    <div class="hero-avatar">
+      <img src="res/profile-pic.jpg" alt="Tony">
+      <span class="hero-avatar-dot"></span>
+    </div>
+    <div class="hero-identity-text">
+      <span class="hero-identity-name">Hi, I'm Tony</span>
+      <span class="hero-identity-status">Available for work</span>
+    </div>
+  </div>
+  <h1 class="hero-title">Editing that <em>holds</em> attention.</h1>
+  <p class="hero-sub">I help content creators grow on social media with clean cuts, strong hooks, and motion graphics.</p>
+  <div class="hero-actions">
+    <a href="#work" class="hero-cta">See my work ↓</a>
+    <a href="https://twitter.com/messages/compose?recipient_id=tonyjedits" target="_blank" rel="noopener" class="hero-cta-secondary">Hire me →</a>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" class="fade-up">
+  <div class="work-header">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2 class="work-title">Recent projects</h2>
+    </div>
+    <div class="work-filter">
+      <button class="filter-btn active" onclick="filterWork('all', this)">All</button>
+      <button class="filter-btn" onclick="filterWork('long', this)">Long-form</button>
+      <button class="filter-btn" onclick="filterWork('short', this)">Short-form</button>
+    </div>
+  </div>
+
+  <p class="content-sublabel" id="longform-label">Long-form</p>
+
+  <div class="video-grid" id="video-grid">
+
+    <div class="video-card" data-type="long">
+      <div class="video-wrap" onclick="loadVideo(this)" data-id="Fi7qFo-3BEc">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/Fi7qFo-3BEc/hqdefault.jpg" alt="Hook Edit — Long Form #1">
+        <div class="play-btn"><div class="play-circle"></div></div>
+        <div class="video-meta">
+          <p class="video-title">Trial for Karl</p>
+          <p class="video-tag">YouTube · Hook · Long-form</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="long">
+      <div class="video-wrap" onclick="loadVideo(this)" data-id="ADEbq_VHSOA">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/ADEbq_VHSOA/hqdefault.jpg" alt="Hook Edit — Long Form #2">
+        <div class="play-btn"><div class="play-circle"></div></div>
+        <div class="video-meta">
+          <p class="video-title">Trial for Will</p>
+          <p class="video-tag">YouTube · Hook · Long-form</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="content-sublabel" id="shorts-label">Short-form</p>
+  <div class="shorts-row" id="shorts-row">
+
+    <div class="video-card" data-type="short">
+      <div class="video-wrap" onclick="loadVideo(this)" data-id="jXmTX4UbPUk">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/jXmTX4UbPUk/hqdefault.jpg" alt="Short Form Edit #1">
+        <div class="play-btn"><div class="play-circle"></div></div>
+        <div class="video-meta">
+          <p class="video-title">Clean Aesthetic </p>
+          <p class="video-tag">YouTube Shorts · Short-form</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="short">
+      <div class="video-wrap" onclick="loadVideo(this)" data-id="DQnblDu2lco">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/DQnblDu2lco/hqdefault.jpg" alt="Short Form Edit #2">
+        <div class="play-btn"><div class="play-circle"></div></div>
+        <div class="video-meta">
+          <p class="video-title">Motivational Hormozi Edit</p>
+          <p class="video-tag">YouTube Shorts · Short-form</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="short">
+      <div class="video-wrap" onclick="loadVideo(this)" data-id="2ijFjMWI7xs">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/2ijFjMWI7xs/hqdefault.jpg" alt="Short Form Edit #3">
+        <div class="play-btn"><div class="play-circle"></div></div>
+        <div class="video-meta">
+          <p class="video-title">3D Motion Practice</p>
+          <p class="video-tag">YouTube Shorts · Short-form</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card" data-type="short">
+      <div class="video-wrap" onclick="loadVideo(this)" data-id="RIP9H5I7CuQ">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/RIP9H5I7CuQ/mqdefault.jpg" alt="Short Form Edit #4">
+        <div class="play-btn"><div class="play-circle"></div></div>
+        <div class="video-meta">
+          <p class="video-title">Travel Intro Edit</p>
+          <p class="video-tag">YouTube Shorts · Short-form</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="fade-up">
+  <p class="section-label">About</p>
+  <div class="about-grid">
+    <div class="about-photo">
+      <img src="res/profile-pic.jpg" alt="Tony">
+    </div>
+    <div>
+      <blockquote class="about-quote">
+        “The essence of cinema is <em>editing</em>”
+        <cite>— Francis Ford Coppola</cite>
+      </blockquote>
+      <p class="about-text">
+        I’m Tony, an 18-year-old video editor. I got into editing about a year ago. It started with filming random moments with friends and putting them together so we could keep those memories. Somewhere along the way I realized I actually loved the editing part more than anything else.
+      </p>
+      <p class="about-text">
+        I had a YouTube channel as a kid, so the creative instinct was always there. Now I’m focusing on it seriously — working on long-form content, strong hooks, motion graphics, and clean edits that keep people watching.
+      </p>
+      <p class="about-text">
+        I mainly edit in DaVinci Resolve, and I’m always trying to improve and learn new techniques.
+      </p>
+      <p class="about-text">
+        Some of the shorts I edited and posted across social media have reached 100K+ total views, which showed me how much good editing can make a difference — even with no budget behind it.
+      </p>
+      <div class="skills-list">
+        <span class="skill-tag">DaVinci Resolve</span>
+        <span class="skill-tag">Hook Editing</span>
+        <span class="skill-tag">Motion Graphics</span>
+        <span class="skill-tag">Colour Grading</span>
+        <span class="skill-tag">Captions & Subtitles</span>
+        <span class="skill-tag">Pacing & Retention</span>
+        <span class="skill-tag">Sound Design</span>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <p class="stat-num">100K+</p>
+        <p class="stat-label">Views generated for my social media</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-num">~5y</p>
+        <p class="stat-label">Editing since I was a kid</p>
+      </div>
+      <div class="stat-item">
+        <p class="stat-num">100%</p>
+        <p class="stat-label">Satisfaction guaranteed, always</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-up">
+  <p class="section-label">Contact</p>
+  <div class="contact-inner">
+    <h2 class="contact-heading">Let's work <em>together.</em></h2>
+    <div class="contact-links">
+      <a href="mailto:tonyjedits@gmail.com" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m2 7 10 7 10-7"/>
+        </svg>
+        tonyjedits@gmail.com
+      </a>
+      <span class="contact-divider">—</span>
+      <a href="https://twitter.com/tonyjedits" target="_blank" rel="noopener" class="contact-link">
+        @tonyjedits on X
+      </a>
+      <span class="contact-divider">—</span>
+      <a href="https://youtube.com/@tonyjedits" target="_blank" rel="noopener" class="contact-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+          <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/>
+        </svg>
+        @tonyjedits on YouTube
+      </a>
+    </div>
+    <p style="font-size:0.85rem;font-weight:300;color:var(--gray-500);max-width:44ch;line-height:1.7;">
+      When working with me, you can expect:<br>
+      •	Up to 72h turnaround depending on project length<br>
+      •	2 revision rounds included<br>
+      •	24-hour response time<br>
+      •	Clear communication and project updates
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-copy">© 2026 Tony. All rights reserved.</p>
+  <a href="#" class="footer-back">Back to top ↑</a>
+</footer>
+
+<script>
+  /* SCROLL FADE-IN */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  /* VIDEO LAZY LOAD */
+  function loadVideo(wrap) {
+    const id = wrap.dataset.id;
+    if (!id || id.startsWith('YOUR_')) {
+      alert('Replace the video ID with your real YouTube ID.');
+      return;
+    }
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+    wrap.innerHTML = '';
+    wrap.appendChild(iframe);
+    wrap.style.cursor = 'default';
+  }
+
+  /* WORK FILTER */
+  function filterWork(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const shortsRow = document.getElementById('shorts-row');
+    const shortsLabel = document.getElementById('shorts-label');
+    const longformLabel = document.getElementById('longform-label');
+
+    document.querySelectorAll('#video-grid .video-card').forEach(card => {
+      card.style.display = (type === 'all' || type === 'long') ? '' : 'none';
+    });
+
+    const showLong = (type === 'all' || type === 'long');
+    const showShort = (type === 'all' || type === 'short');
+
+    if (longformLabel) longformLabel.style.display = showLong ? '' : 'none';
+    document.getElementById('video-grid').style.display = showLong ? '' : 'none';
+    if (shortsLabel) shortsLabel.style.display = showShort ? '' : 'none';
+    if (shortsRow) shortsRow.style.display = showShort ? '' : 'none';
+  }
+</script>
+
+</body>
+</html>
