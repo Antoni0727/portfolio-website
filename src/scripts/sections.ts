@@ -109,3 +109,22 @@ export function initCopy() {
     });
   });
 }
+
+/* Why me: each row reveals left to right: their answer, the link draws across, mine lights up */
+export function initWhyTable() {
+  const table = $('[data-vs]');
+  if (!table) return;
+  const them = $$('[data-vs-them]', table);
+  const links = $$('[data-vs-link] i', table);
+  const me = $$('[data-vs-me]', table);
+  if (reduceMotion) { gsap.set([...them, ...me], { opacity: 1 }); gsap.set(links, { scaleX: 1 }); return; }
+  const tl = gsap.timeline({ paused: true });
+  them.forEach((t, i) => {
+    const at = i * .14;
+    tl.fromTo(t, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: .7, ease: 'expo.out' }, at)
+      .fromTo(links[i], { scaleX: 0 }, { scaleX: 1, duration: .55, ease: 'power3.inOut' }, at + .15)
+      .fromTo(me[i], { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: .7, ease: 'expo.out' }, at + .45)
+      .fromTo(me[i].querySelector('.vs__check'), { scale: 0 }, { scale: 1, duration: .5, ease: 'back.out(2.4)' }, at + .5);
+  });
+  ScrollTrigger.create({ trigger: table, start: 'top 75%', once: true, onEnter: () => tl.play() });
+}

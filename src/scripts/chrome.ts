@@ -1,5 +1,5 @@
 /* Site chrome: nav, progress, background, cursor, contact window, anchor links */
-import { gsap, ScrollTrigger, $, $$, reduceMotion, finePointer, scrollToTarget, pauseScroll, resumeScroll } from './core';
+import { gsap, ScrollTrigger, $, $$, reduceMotion, finePointer, isTouch, scrollToTarget, pauseScroll, resumeScroll } from './core';
 
 export function initNav() {
   const nav = $('[data-nav]');
@@ -105,6 +105,11 @@ export function initContactWindow() {
     pauseScroll();
     requestAnimationFrame(() => dlg.classList.add('is-open'));
     if (reduceMotion) return;
+    if (isTouch) {
+      // phones: one simple, GPU-only move (no 3D, no per-item stagger)
+      gsap.fromTo(win, { opacity: 0, y: 28, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'power3.out', force3D: true });
+      return;
+    }
     gsap.fromTo(win, { opacity: 0, y: 40, scale: .9, rotateX: 10, transformPerspective: 1200 }, { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: .9, ease: 'expo.out' });
     gsap.fromTo(opts, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .8, stagger: .06, ease: 'expo.out', delay: .12 });
   };
@@ -123,7 +128,7 @@ export function initContactWindow() {
       gsap.set(win, { clearProps: 'all' });
     };
     if (reduceMotion) return done();
-    gsap.to(win, { opacity: 0, y: 18, scale: .96, duration: .38, ease: 'power3.in', onComplete: done });
+    gsap.to(win, { opacity: 0, y: 18, scale: .96, duration: isTouch ? .25 : .38, ease: 'power3.in', onComplete: done });
   };
 
   document.addEventListener('click', (e) => {
@@ -134,4 +139,34 @@ export function initContactWindow() {
     if (e.target === dlg || (e.target as HTMLElement).closest('[data-close]')) close();
   });
   dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+}
+
+/* Dark / light theme: follows the device until the visitor picks one with the switch */
+export function initTheme() {
+  const root = document.documentElement;
+  const btn = $('[data-theme-toggle]');
+  const sys = window.matchMedia('(prefers-color-scheme: dark)');
+  const saved = () => { try { return localStorage.getItem('theme'); } catch { return null; } };
+  const label = () => btn?.setAttribute('aria-label', root.dataset.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  const apply = (t: string) => { root.dataset.theme = t; label(); };
+  label();
+
+  sys.addEventListener('change', (e) => { if (!saved()) apply(e.matches ? 'dark' : 'light'); });
+
+  btn?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', next); } catch {}
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+    if (!doc.startViewTransition || reduceMotion) { apply(next); return; }
+    // circular reveal from the switch
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    doc.startViewTransition(() => apply(next)).ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: 'cubic-bezier(.16, 1, .3, 1)', pseudoElement: '::view-transition-new(root)' },
+      );
+    });
+  });
 }

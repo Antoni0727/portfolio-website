@@ -20,10 +20,6 @@ export function initProcess() {
   stepStory();
   stepPolish();
   stepPublish();
-  whyStory();
-  whyCraft();
-  whyCreator();
-  whyClean();
 }
 
 /* 01: files fall into the shared folder */
@@ -127,88 +123,6 @@ function stepPublish() {
     .to(progress, { backgroundColor: '#22A565', duration: .4 }, '<')
     .to(cursor, { x: '+=50', y: '+=60', opacity: 0, duration: .8, ease: 'power2.in' }, '<.2')
     .to({}, { duration: 2 });
-  loopWhenVisible(card, tl);
-}
-
-/* Why: key phrases get highlighted */
-function whyStory() {
-  const card = $('[data-tile="story"]');
-  if (!card) return;
-  const marks = $$('[data-mark]', card);
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.2 });
-  tl.to(marks, { backgroundSize: '100% 100%', duration: 1, ease: 'power3.inOut', stagger: .8 })
-    .to({}, { duration: 2.2 })
-    .to(marks, { backgroundSize: '0% 100%', duration: .7, ease: 'power2.in' });
-  loopWhenVisible(card, tl);
-}
-
-/* Why: sound meter dances, color knob slides into the grade, motion curve draws */
-function whyCraft() {
-  const card = $('[data-tile="craft"]');
-  if (!card) return;
-  const meters = $$('[data-meter]', card);
-  const knob = $('[data-grade-knob]', card)!;
-  const curve = $<SVGPathElement>('[data-curve]', card)!;
-  const len = curve.getTotalLength();
-  gsap.set(curve, { strokeDasharray: len, strokeDashoffset: len });
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: .4 });
-  const track = knob.parentElement!;
-  tl.to(knob, { x: () => track.clientWidth * .72, duration: 2.2, ease: 'expo.inOut' }, .3)
-    .to(curve, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut' }, .8)
-    .to({}, { duration: 2.4 })
-    .to(knob, { x: 0, duration: 1.4, ease: 'expo.inOut' })
-    .to(curve, { strokeDashoffset: len, duration: 1, ease: 'power2.in' }, '<');
-  void meters; // meter animates in CSS (cheaper), see .is-live
-  loopWhenVisible(card, tl);
-}
-
-/* Why: subscribe toggles on the channel card */
-function whyCreator() {
-  const card = $('[data-tile="creator"]');
-  if (!card) return;
-  const sub = $('[data-sub]', card)!;
-  const tl = gsap.timeline({ repeat: -1 });
-  tl.call(() => sub.classList.add('is-on'), [], 1.4).call(() => sub.classList.remove('is-on'), [], 4.4).to({}, { duration: 1 }, 4.4);
-  loopWhenVisible(card, tl);
-}
-
-/* Why: a short burst of "other editors" chaos, it freezes and fades back,
-   then my side takes over for most of the loop: slow push-in, clean caption,
-   and one smooth punch-in on the last word. */
-function whyClean() {
-  const card = $('[data-tile="clean"]');
-  if (!card) return;
-  const them = $('[data-them]', card)!;
-  const me = $('[data-me]', card)!;
-  const dim = $('[data-them-dim]', card)!;
-  const zoom = $('[data-me-zoom]', card)!;
-  const words = $$('[data-word]', card);
-  const reset = () => { card.classList.add('is-chaos'); words.forEach((w) => w.classList.remove('is-on')); };
-
-  const tl = gsap.timeline({ repeat: -1, onRepeat: reset });
-  reset();
-  const punchAt = 2.4 + (words.length - 1) * .5;
-  tl.set(them, { opacity: 1, scale: 1 })
-    .set(dim, { opacity: 0 })
-    .set(me, { opacity: .35, scale: .95 })
-    .set(zoom, { scale: 1 })
-    // 1) the mess, briefly (~1.6s)
-    .to({}, { duration: 1.6 })
-    // 2) it freezes on this frame and steps back, at the same moment
-    .call(() => card.classList.remove('is-chaos'))
-    .to(dim, { opacity: 1, duration: .5, ease: 'power2.out' })
-    .to(them, { opacity: .5, scale: .94, duration: .8, ease: 'expo.out' }, '<')
-    // 3) my side takes over and holds for most of the loop
-    .to(me, { opacity: 1, scale: 1.05, duration: .9, ease: 'expo.out' }, '<.05')
-    .to(zoom, { scale: 1.12, duration: 2.6, ease: 'power1.inOut' }, '<');
-  words.forEach((w, i) => tl.call(() => w.classList.add('is-on'), [], 2.4 + i * .5));
-  tl.to(zoom, { scale: 1.3, duration: .9, ease: 'expo.inOut' }, punchAt)
-    .to({}, { duration: 2.6 })
-    // 4) gentle reset for the next loop
-    .to(me, { opacity: .35, scale: .95, duration: .6, ease: 'power2.inOut' })
-    .to(zoom, { scale: 1, duration: .6, ease: 'power2.inOut' }, '<')
-    .to(them, { opacity: 1, scale: 1, duration: .6, ease: 'power2.inOut' }, '<')
-    .to(dim, { opacity: 0, duration: .6 }, '<');
   loopWhenVisible(card, tl);
 }
 

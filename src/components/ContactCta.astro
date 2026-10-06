@@ -47,7 +47,7 @@ import { icons } from '../data/icons';
     font-size: var(--fs-small); color: var(--ink-3);
     transition: background-color .5s var(--ease), color .5s var(--ease);
   }
-  @media (hover: hover) { .cta-copy:hover { background: rgba(18,17,22,.045); color: var(--ink); } }
+  @media (hover: hover) { .cta-copy:hover { background: var(--hover); color: var(--ink); } }
   .cta-copy__state { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: var(--r-pill); background: var(--bg-2); color: var(--ink-2); font-size: .78rem; font-weight: 600; transition: background-color .5s var(--ease), color .5s var(--ease); }
   .cta-copy__state i { display: inline-grid; }
   .cta-copy.is-copied .cta-copy__state { background: var(--ok); color: #fff; }

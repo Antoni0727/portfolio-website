@@ -222,7 +222,7 @@ const sfx = [0.07, 0.24, 0.43, 0.61, 0.79, 0.9];
   .editor__viewer.is-playing .editor__meta, .editor__viewer.is-playing .vglow { opacity: 0; pointer-events: none; }
 
   /* ---- timeline (Final Cut–style: rounded clips, attached audio, no track labels) ---- */
-  .tl { margin-top: 10px; padding: 10px 14px 14px; border-radius: 16px; background: linear-gradient(180deg, #F3F2F7, #EEEDF3); border: 1px solid var(--line); }
+  .tl { margin-top: 10px; padding: 10px 14px 14px; border-radius: 16px; background: var(--tl-bg); border: 1px solid var(--line); }
   .tl__area {
     position: relative; display: grid;
     grid-template-rows: 18px 16px 42px 24px 18px 10px; row-gap: 4px;
@@ -230,8 +230,8 @@ const sfx = [0.07, 0.24, 0.43, 0.61, 0.79, 0.9];
   }
   .tl__ruler {
     position: relative; display: flex; justify-content: space-between; align-items: flex-start;
-    font-size: .64rem; font-weight: 500; color: rgba(18,17,22,.38);
-    background: repeating-linear-gradient(90deg, rgba(18,17,22,.16) 0 1px, transparent 1px 2.5%) 0 100% / 100% 4px no-repeat;
+    font-size: .64rem; font-weight: 500; color: var(--tl-ruler);
+    background: repeating-linear-gradient(90deg, var(--line-2) 0 1px, transparent 1px 2.5%) 0 100% / 100% 4px no-repeat;
   }
   .tl__ruler span { transform: translateX(-50%); }
   .tl__ruler span:first-child { transform: none; }
@@ -262,10 +262,10 @@ const sfx = [0.07, 0.24, 0.43, 0.61, 0.79, 0.9];
   .tl__clip.is-active::before { opacity: .6; }
   .tl__clip.is-active { box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px var(--accent), 0 6px 16px -6px rgba(107,75,255,.6); }
 
-  .tl__audio { border-radius: 6px; overflow: hidden; background: #DCEFE4; box-shadow: inset 0 0 0 1px rgba(40,140,90,.18); }
+  .tl__audio { border-radius: 6px; overflow: hidden; background: var(--audio-bg); box-shadow: inset 0 0 0 1px rgba(40,140,90,.18); }
   .tl__audio svg { position: absolute; inset: 3px 4px; width: calc(100% - 8px); height: calc(100% - 6px); }
   .tl__audio :global(rect) { fill: #3FAE73; }
-  .tl__audio--music { background: #E1E6FB; box-shadow: inset 0 0 0 1px rgba(80,100,200,.16); }
+  .tl__audio--music { background: var(--music-bg); box-shadow: inset 0 0 0 1px rgba(80,100,200,.16); }
   .tl__audio--music :global(path) { fill: #8DA0EC; }
   .tl__audio--music::before, .tl__audio--music::after { content: ""; position: absolute; top: 0; bottom: 0; width: 14%; z-index: 1; }
   .tl__audio--music::before { left: 0; background: linear-gradient(to top right, transparent 49%, rgba(255,255,255,.55) 50%); }

@@ -1,6 +1,7 @@
 ---
 import { site, socials } from '../data/site';
 import { icons } from '../data/icons';
+import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 const links = [
   { href: socials.x, label: 'X (Twitter)', svg: icons.x(17) },
@@ -12,7 +13,7 @@ const links = [
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <a href="/" class="brand">{site.name}</a>
+      <a href="/" class="brand footer__logo"><Logo size={26} />{site.name}</a>
       <small>© {year} · Video editor based in {site.location} ({site.timezone})</small>
       <small class="footer__credit">Tool logos are trademarks of their owners. DaVinci Resolve icon by Blackmagic Design, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</small>
     </div>
@@ -30,6 +31,8 @@ const links = [
   .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--line); }
   .footer__brand { display: flex; flex-direction: column; gap: 4px; }
   .footer__brand small { color: var(--ink-3); font-size: .82rem; }
+  .footer__logo { display: inline-flex; align-items: center; gap: 9px; font-weight: 680; letter-spacing: -0.03em; }
+  .footer__logo :global(svg) { border-radius: 7px; }
   .footer__credit { font-size: .72rem !important; opacity: .75; }
   .footer__credit a { text-decoration: underline; text-underline-offset: 2px; }
   .socials { display: flex; gap: 4px; }

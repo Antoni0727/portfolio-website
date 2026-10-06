@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, $, $$, reduceMotion, finePointer, isLite } from './core';
+import { gsap, ScrollTrigger, $, $$, reduceMotion, finePointer, isLite, isTouch } from './core';
 import { revealHeading } from './reveal';
 import { playInline, stopInline } from './player';
 
@@ -26,7 +26,7 @@ export function initHero() {
   Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 800))]).then(() => requestAnimationFrame(run));
 
   /* ---- soft aurora drift + scroll fade ---- */
-  if (!reduceMotion) {
+  if (!reduceMotion && !isTouch) {
     const drift = $$('[data-aura]', hero).map((el, i) =>
       gsap.to(el, { xPercent: i ? -14 : 10, yPercent: i ? 12 : 8, duration: 14 + i * 4, ease: 'sine.inOut', yoyo: true, repeat: -1 }));
     ScrollTrigger.create({ trigger: hero, start: 'top top', end: 'bottom top', onToggle: (s) => drift.forEach((t) => (s.isActive && !isLite ? t.play() : t.pause())) });

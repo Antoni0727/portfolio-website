@@ -78,6 +78,20 @@ const options = [
       radial-gradient(80% 50% at 100% 110%, rgba(190,170,255,.25), transparent 60%);
   }
   .contact__win > * { position: relative; }
+  /* dark glass */
+  [data-theme="dark"] .contact__win {
+    background: linear-gradient(160deg, rgba(40,38,52,.82), rgba(22,21,29,.66));
+    border-color: rgba(255,255,255,.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 50px 120px -20px rgba(0,0,0,.7), 0 10px 30px rgba(0,0,0,.4);
+  }
+  [data-theme="dark"] .contact__win::before { background: radial-gradient(120% 60% at 15% -10%, rgba(255,255,255,.08), transparent 55%), radial-gradient(80% 50% at 100% 110%, rgba(124,92,255,.25), transparent 60%); }
+  [data-theme="dark"] .contact__eyebrow { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); }
+  [data-theme="dark"] .opt { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.08); box-shadow: none; }
+  @media (hover: hover) { [data-theme="dark"] .opt:hover { background: rgba(255,255,255,.1); border-color: var(--accent-200); } }
+  @media (hover: hover) { [data-theme="dark"] .copy:hover { background: rgba(255,255,255,.06); } }
+  /* phones: no live blur (it re-blurs the whole screen every frame of the animation) */
+  .is-touch .contact__win { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface); }
+  .is-touch .contact::backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 14, 44, .38); }
   .contact__body { padding: 12px 26px 24px; }
   .contact__eyebrow {
     display: inline-flex; align-items: center; gap: 9px;

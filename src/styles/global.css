@@ -28,6 +28,29 @@
   --accent-glow: rgba(107, 75, 255, 0.35);
   --ok: #22A565;
 
+  /* surfaces used by components (each has a dark twin below) */
+  --glass: rgba(253,253,254,.9);
+  --nav-bg: rgba(250,249,252,.94);
+  --window: #FBFBFD;
+  --hover: rgba(18,17,22,.045);
+  --dot: rgba(18,17,22,.085);
+  --dot-soft: rgba(18,17,22,.07);
+  --tl-bg: linear-gradient(180deg, #F3F2F7, #EEEDF3);
+  --tl-ruler: rgba(18,17,22,.38);
+  --audio-bg: #DCEFE4;
+  --music-bg: #E1E6FB;
+  --music-clip: #C9D3F8;
+  --bubble-violet: #EFEBFF;
+  --bubble-rose: #FDEBF3;
+  --folder-a: #EFEAFF;
+  --folder-b: #E1D8FF;
+  --folder-tab: #CFC3FF;
+  --folder-ink: #3E28B0;
+  --sketch: rgba(18,17,22,.45);
+  --sketch-soft: rgba(18,17,22,.25);
+  --sketch-line: rgba(18,17,22,.14);
+  color-scheme: light;
+
   /* type */
   --font: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --fs-body: 1.0625rem;
@@ -57,6 +80,98 @@
   --t-fast: .25s;
   --t: .5s;
   --t-slow: .9s;
+}
+
+/* ---------- Dark theme ----------
+   Used when the visitor picks dark with the switch, or when their device is in dark mode
+   and they haven't picked anything (the head script sets data-theme before first paint). */
+:root[data-theme="dark"] {
+  --bg: #0D0C11;
+  --bg-2: #17161D;
+  --surface: #1B1A21;
+  --ink: #F3F2F7;
+  --ink-2: #D0CEDA;
+  --ink-3: #9795A3;
+  --line: rgba(255,255,255,.08);
+  --line-2: rgba(255,255,255,.15);
+  --accent: #7C5CFF;
+  --accent-600: #6B4BFF;
+  --accent-700: #B9A8FF;
+  --accent-300: #8F75FF;
+  --accent-200: rgba(124,92,255,.42);
+  --accent-100: rgba(124,92,255,.26);
+  --accent-50: rgba(124,92,255,.16);
+  --accent-soft: rgba(124,92,255,.3);
+  --accent-glow: rgba(124,92,255,.5);
+  --shadow-1: 0 1px 2px rgba(0,0,0,.45), 0 6px 20px rgba(0,0,0,.3);
+  --shadow-2: 0 2px 6px rgba(0,0,0,.4), 0 24px 64px rgba(0,0,0,.5);
+  --shadow-3: 0 30px 70px -10px rgba(0,0,0,.65), 0 8px 24px rgba(0,0,0,.35);
+  --glass: rgba(30,29,37,.88);
+  --nav-bg: rgba(20,19,26,.92);
+  --window: #16151B;
+  --hover: rgba(255,255,255,.06);
+  --dot: rgba(255,255,255,.075);
+  --dot-soft: rgba(255,255,255,.06);
+  --tl-bg: linear-gradient(180deg, #1D1C23, #18171E);
+  --tl-ruler: rgba(255,255,255,.4);
+  --audio-bg: rgba(63,174,115,.17);
+  --music-bg: rgba(126,147,232,.18);
+  --music-clip: rgba(126,147,232,.4);
+  --bubble-violet: rgba(124,92,255,.22);
+  --bubble-rose: rgba(229,87,154,.2);
+  --folder-a: #2A2445;
+  --folder-b: #221C3D;
+  --folder-tab: #3A3165;
+  --folder-ink: #D3C8FF;
+  --sketch: rgba(255,255,255,.5);
+  --sketch-soft: rgba(255,255,255,.3);
+  --sketch-line: rgba(255,255,255,.16);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --bg: #0D0C11;
+  --bg-2: #17161D;
+  --surface: #1B1A21;
+  --ink: #F3F2F7;
+  --ink-2: #D0CEDA;
+  --ink-3: #9795A3;
+  --line: rgba(255,255,255,.08);
+  --line-2: rgba(255,255,255,.15);
+  --accent: #7C5CFF;
+  --accent-600: #6B4BFF;
+  --accent-700: #B9A8FF;
+  --accent-300: #8F75FF;
+  --accent-200: rgba(124,92,255,.42);
+  --accent-100: rgba(124,92,255,.26);
+  --accent-50: rgba(124,92,255,.16);
+  --accent-soft: rgba(124,92,255,.3);
+  --accent-glow: rgba(124,92,255,.5);
+  --shadow-1: 0 1px 2px rgba(0,0,0,.45), 0 6px 20px rgba(0,0,0,.3);
+  --shadow-2: 0 2px 6px rgba(0,0,0,.4), 0 24px 64px rgba(0,0,0,.5);
+  --shadow-3: 0 30px 70px -10px rgba(0,0,0,.65), 0 8px 24px rgba(0,0,0,.35);
+  --glass: rgba(30,29,37,.88);
+  --nav-bg: rgba(20,19,26,.92);
+  --window: #16151B;
+  --hover: rgba(255,255,255,.06);
+  --dot: rgba(255,255,255,.075);
+  --dot-soft: rgba(255,255,255,.06);
+  --tl-bg: linear-gradient(180deg, #1D1C23, #18171E);
+  --tl-ruler: rgba(255,255,255,.4);
+  --audio-bg: rgba(63,174,115,.17);
+  --music-bg: rgba(126,147,232,.18);
+  --music-clip: rgba(126,147,232,.4);
+  --bubble-violet: rgba(124,92,255,.22);
+  --bubble-rose: rgba(229,87,154,.2);
+  --folder-a: #2A2445;
+  --folder-b: #221C3D;
+  --folder-tab: #3A3165;
+  --folder-ink: #D3C8FF;
+  --sketch: rgba(255,255,255,.5);
+  --sketch-soft: rgba(255,255,255,.3);
+  --sketch-line: rgba(255,255,255,.16);
+  color-scheme: dark;
+  }
 }
 
 /* ---------- Base ---------- */
@@ -266,7 +381,7 @@ button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation
 }
 
 .btn--ghost {
-  background: rgba(253,253,254,.9);
+  background: var(--glass);
   color: var(--ink);
   border: 1px solid var(--line-2);
   transition: transform .8s var(--ease), background-color 1s var(--ease), border-color 1s var(--ease), color 1s var(--ease);
@@ -289,7 +404,7 @@ button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation
   display: inline-flex; align-items: center; gap: 9px;
   padding: 7px 15px 7px 12px;
   border-radius: var(--r-pill);
-  background: rgba(253,253,254,.92);
+  background: var(--glass);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-1);
   font-size: var(--fs-small);
@@ -308,8 +423,8 @@ button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation
 .window {
   position: relative;
   border-radius: var(--r-l);
-  background: #FBFBFD;
-  border: 1px solid rgba(255,255,255,.9);
+  background: var(--window);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-3), 0 0 0 1px var(--line);
 }
 .window__bar {
@@ -351,6 +466,14 @@ dialog::backdrop { background: rgba(28, 20, 60, .18); -webkit-backdrop-filter: b
 .is-lite .label__star { opacity: 0 !important; }
 .is-lite .bg__spot, .is-lite .vglow, .is-lite .vcard__ring { display: none !important; }
 .is-lite .pill__dot::after { animation: none; }
+
+/* ---------- Theme switch animation (View Transitions) ---------- */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* ---------- Touch devices ---------- */
+.is-touch dialog::backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 14, 44, .38); }
+.is-touch .btn, .is-touch .more__btn, .is-touch .tbtn, .is-touch .opt, .is-touch .seg button { transition-duration: .18s !important; }
+.is-touch .btn:active, .is-touch .more__btn:active, .is-touch .opt:active { transform: scale(.97); }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

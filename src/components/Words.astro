@@ -96,8 +96,8 @@ const heart = `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true
   .msg:not(.is-first):not(.is-last) .msg__bubble { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
   .msg.is-last:not(.is-first) .msg__bubble { border-top-left-radius: 8px; border-bottom-left-radius: 6px; }
   .msg.is-first.is-last .msg__bubble { border-bottom-left-radius: 6px; }
-  .msg--violet .msg__bubble { background: #EFEBFF; }
-  .msg--rose .msg__bubble { background: #FDEBF3; }
+  .msg--violet .msg__bubble { background: var(--bubble-violet); }
+  .msg--rose .msg__bubble { background: var(--bubble-rose); }
 
   .msg--me { align-self: flex-end; flex-direction: row-reverse; margin-top: 26px; }
   .msg--me .msg__who { justify-content: flex-end; }

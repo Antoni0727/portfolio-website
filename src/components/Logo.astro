@@ -1,0 +1,16 @@
+---
+/* Brand mark: a playhead whose line curls into a J. Same artwork as public/icons/logo.svg */
+interface Props { size?: number; class?: string }
+const { size = 28, class: cls = '' } = Astro.props;
+const id = `lg${Math.random().toString(36).slice(2, 7)}`;
+---
+<svg class={cls} viewBox="0 0 64 64" width={size} height={size} aria-hidden="true">
+  <defs>
+    <linearGradient id={`${id}g`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8A6EFF" /><stop offset=".55" stop-color="#6B4BFF" /><stop offset="1" stop-color="#4A2DD6" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill={`url(#${id}g)`} />
+  <path d="M29 11.5 H43 a2.5 2.5 0 0 1 2.5 2.5 V21 a2.5 2.5 0 0 1 -.9 1.9 L37.6 28.6 a4 4 0 0 1 -5.2 0 L25.4 22.9 a2.5 2.5 0 0 1 -.9 -1.9 V14 a2.5 2.5 0 0 1 2.5 -2.5 Z" fill="#fff" />
+  <path d="M35 27 V40.5 a9.5 9.5 0 0 1 -9.5 9.5 H22.5" stroke="#fff" stroke-width="6.5" stroke-linecap="round" fill="none" />
+</svg>

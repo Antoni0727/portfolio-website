@@ -7,6 +7,16 @@ export const proof = [
   { value: '2 revisions', label: 'included with every video' },
 ];
 
+/* "Why me" comparison. Keep each side short (3–5 words, no full stop). */
+export const comparison = [
+  { them: 'Flashy effects everywhere', me: 'Clarity in every cut' },
+  { them: 'Editing for other editors', me: 'Editing for your viewers' },
+  { them: 'Only cares how it looks', me: 'Story, emotion and feel' },
+  { them: 'Guessing what works', me: 'Creator mindset, own channel' },
+  { them: 'Missed deadlines, rushed work', me: 'Always on time' },
+  { them: 'Messy files, slow replies', me: 'Organized, clear updates' },
+];
+
 /* Reviews, shown as a group chat. Consecutive messages from the same
    person group together like in iMessage. */
 export const chat = {

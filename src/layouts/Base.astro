@@ -33,13 +33,15 @@ const schema = {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- Marks JS as running before first paint so reveal animations don't flash. Its hash is allowed in public/_headers. -->
-  <script is:inline>document.documentElement.classList.add('js')</script>
+  <!-- Runs before first paint: picks the theme (saved choice, else the device setting) and marks JS as on,
+       so nothing flashes. Its sha256 hash is allowed in public/_headers; update it if you edit this line. -->
+  <script is:inline>(function(){var d=document.documentElement,t;try{t=localStorage.getItem('theme')}catch(e){}d.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');d.classList.add('js')})()</script>
   <title>{title}</title>
   <meta name="description" content={description}>
   <link rel="canonical" href={canonical}>
   {noindex && <meta name="robots" content="noindex">}
-  <meta name="theme-color" content="#F6F5F8">
+  <meta name="theme-color" content="#F6F5F8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0D0C11" media="(prefers-color-scheme: dark)">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content={site.name}>
@@ -50,9 +52,10 @@ const schema = {
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content={`@${site.handle}`}>
 
-  <link rel="icon" href="/icons/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" href="/icons/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/icons/logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="sitemap" href="/sitemap-index.xml">
   <link rel="preconnect" href="https://i.ytimg.com">
 
