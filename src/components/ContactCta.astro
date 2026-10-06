@@ -1,0 +1,54 @@
+---
+import Button from './Button.astro';
+import { site, socials } from '../data/site';
+import { icons } from '../data/icons';
+---
+<section class="section cta" id="contact" aria-labelledby="contact-cta-title">
+  <div class="container">
+    <div class="cta-card" data-reveal-img data-cta-card>
+      <div class="cta-card__glow" aria-hidden="true"><span data-cta-glow></span></div>
+      <p class="pill"><span class="pill__dot" aria-hidden="true"></span>Open to new projects</p>
+      <h2 class="cta-card__title" id="contact-cta-title" data-split>Let's make your next video <span class="sel" data-sel>the one</span></h2>
+      <p class="lead" data-reveal>Tell me about your channel and what you're working on. I'll get back to you within 24 hours.</p>
+      <div class="cta-card__actions" data-reveal>
+        <Button cta icon="arrow">Message me</Button>
+        <Button variant="ghost" href={socials.x} external icon="x">DM me on X</Button>
+      </div>
+      <button class="cta-copy" type="button" data-copy={site.email} data-reveal>
+        <span>{site.email}</span>
+        <span class="cta-copy__state" aria-live="polite"><i set:html={icons.copy(13)} /><span data-copy-label>Copy</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { padding-bottom: clamp(56px, 7vw, 96px); }
+  .cta-card {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: clamp(64px, 10vw, 128px) clamp(20px, 5vw, 64px);
+    border-radius: 40px; background: var(--surface);
+    border: 1px solid var(--line); box-shadow: var(--shadow-3);
+  }
+  .cta-card__glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .cta-card__glow span {
+    position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; margin: -450px 0 0 -450px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(140,110,255,.32), rgba(190,160,255,.12) 50%, transparent);
+    will-change: transform;
+  }
+  .cta-card__title { margin-top: 28px; max-width: 13em; font-size: var(--fs-h2); line-height: 1.02; letter-spacing: -0.045em; font-weight: 650; }
+  .cta-card .lead { margin-top: 20px; }
+  .cta-card__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+  .cta-copy {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-top: 22px; padding: 7px 7px 7px 16px; border-radius: var(--r-pill);
+    font-size: var(--fs-small); color: var(--ink-3);
+    transition: background-color .5s var(--ease), color .5s var(--ease);
+  }
+  @media (hover: hover) { .cta-copy:hover { background: rgba(18,17,22,.045); color: var(--ink); } }
+  .cta-copy__state { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: var(--r-pill); background: var(--bg-2); color: var(--ink-2); font-size: .78rem; font-weight: 600; transition: background-color .5s var(--ease), color .5s var(--ease); }
+  .cta-copy__state i { display: inline-grid; }
+  .cta-copy.is-copied .cta-copy__state { background: var(--ok); color: #fff; }
+</style>

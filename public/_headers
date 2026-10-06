@@ -1,0 +1,13 @@
+# Netlify security headers. Applies to every page.
+# If you add an outside service (booking widget, analytics), allowlist it in the CSP.
+# The sha256 below allows the one tiny inline script in Base.astro. If you edit that script, update the hash.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://i.ytimg.com data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

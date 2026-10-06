@@ -1,0 +1,28 @@
+---
+/* Fixed, page-wide background: a faint dot grid and a soft purple light that
+   follows the cursor (moved with transforms only, so it costs almost nothing).
+   Phones get the calm grid. */
+---
+<div class="bg" aria-hidden="true">
+  <div class="bg__grid"></div>
+  <div class="bg__spot" data-bg-spot></div>
+</div>
+
+<style is:global>
+  .bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: var(--bg); }
+  .bg__grid {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(18,17,22,.085) 1px, transparent 1.5px);
+    background-size: 28px 28px;
+    opacity: .8;
+  }
+  .bg__spot {
+    position: absolute; left: 0; top: 0;
+    width: 900px; height: 900px; margin: -450px 0 0 -450px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(107,75,255,.15), rgba(107,75,255,.06) 45%, transparent 100%);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  @media (hover: none), (pointer: coarse) { .bg__spot { display: none; } }
+</style>

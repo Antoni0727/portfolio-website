@@ -1,0 +1,31 @@
+---
+// Bare frame-rate test page (not linked anywhere, hidden from search engines)
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Frame rate test</title>
+  <style>
+    body { margin: 0; font: 16px/1.5 -apple-system, system-ui, sans-serif; background: #F6F5F8; color: #121116; }
+    main { max-width: 640px; margin: 80px auto; padding: 0 20px; }
+    .box { width: 60px; height: 60px; border-radius: 14px; background: #6B4BFF; margin: 40px 0; animation: move 2s ease-in-out infinite alternate; }
+    @keyframes move { to { transform: translateX(300px); } }
+    #fps { position: fixed; left: 12px; bottom: 12px; padding: 10px 14px; border-radius: 10px; color: #fff; font: 600 14px/1.4 ui-monospace, Menlo, monospace; background: #333; }
+    .spacer { height: 3000px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Frame rate test</h1>
+    <p>This page has nothing on it except one moving square. If this also shows ~30 fps, your browser is limiting the frame rate (not the website).</p>
+    <div class="box"></div>
+    <p>Your screen refresh rate guess: <b id="hz">measuring…</b></p>
+    <div class="spacer"></div>
+  </main>
+  <div id="fps">…</div>
+  <script is:inline src="/dev/fps-test.js"></script>
+</body>
+</html>

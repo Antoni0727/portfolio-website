@@ -1,0 +1,110 @@
+---
+import Button from './Button.astro';
+const links = [
+  { href: '/#work', label: 'Work' },
+  { href: '/#process', label: 'Process' },
+  { href: '/#about', label: 'About' },
+  { href: '/#faq', label: 'FAQ' },
+];
+---
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a href="/" class="brand">Tony J Edits</a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="nav__actions">
+      <Button size="sm" cta>Message me</Button>
+      <button class="nav__menu" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label="Menu" data-menu>
+        <span></span><span></span>
+      </button>
+    </div>
+
+    <!-- phone menu -->
+    <div class="nav__sheet" id="nav-sheet" data-sheet>
+      <ul>
+        {links.map((l) => <li><a href={l.href} data-sheet-link>{l.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 60;
+    padding: 14px max(var(--gutter), env(safe-area-inset-right)) 14px max(var(--gutter), env(safe-area-inset-left));
+    padding-top: max(14px, env(safe-area-inset-top));
+    will-change: transform;
+  }
+  .nav__inner {
+    position: relative;
+    max-width: var(--container);
+    margin-inline: auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    height: 58px;
+    padding: 0 8px 0 22px;
+    border-radius: var(--r-pill);
+  }
+  .nav__inner::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    border-radius: inherit;
+    background: rgba(250,249,252,.94);
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 40px -10px rgba(30,18,80,.12);
+    opacity: 0;
+    transform: scale(.98);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+  }
+  .nav.is-scrolled .nav__inner::before, .nav.is-open .nav__inner::before { opacity: 1; transform: none; }
+
+  .brand { font-weight: 680; font-size: 1.06rem; letter-spacing: -0.03em; }
+
+  .nav__links { display: flex; gap: 2px; }
+  .nav__links a {
+    position: relative; display: block;
+    padding: 9px 15px;
+    border-radius: var(--r-pill);
+    font-size: .925rem; color: var(--ink-2);
+    transition: color var(--t) var(--ease), background-color var(--t) var(--ease);
+  }
+  @media (hover: hover) { .nav__links a:hover { color: var(--ink); background: rgba(18,17,22,.045); } }
+  .nav__links a.is-active { color: var(--accent-700); background: var(--accent-50); }
+
+  .nav__actions { display: flex; align-items: center; gap: 6px; }
+  .nav__menu { display: none; }
+  .nav__sheet { display: none; }
+
+  @media (max-width: 760px) {
+    .nav__links { display: none; }
+    .nav__inner { padding-left: 18px; height: 54px; }
+    .nav__menu {
+      position: relative; display: grid; place-items: center;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--bg-2);
+    }
+    .nav__menu span { position: absolute; left: 13px; right: 13px; height: 1.8px; border-radius: 2px; background: var(--ink); transition: transform .5s var(--ease); }
+    .nav__menu span:first-child { transform: translateY(-3.5px); }
+    .nav__menu span:last-child { transform: translateY(3.5px); }
+    .nav.is-open .nav__menu span:first-child { transform: rotate(45deg); }
+    .nav.is-open .nav__menu span:last-child { transform: rotate(-45deg); }
+
+    .nav__sheet {
+      display: block;
+      position: absolute; left: 0; right: 0; top: calc(100% + 8px);
+      padding: 8px;
+      border-radius: 24px;
+      background: rgba(250,249,252,.97);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 60px -16px rgba(30,18,80,.28);
+      opacity: 0; transform: translateY(-8px) scale(.98); transform-origin: top center;
+      pointer-events: none; visibility: hidden;
+      transition: opacity .35s var(--ease), transform .5s var(--ease), visibility 0s .5s;
+    }
+    .nav.is-open .nav__sheet { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition: opacity .35s var(--ease), transform .5s var(--ease), visibility 0s; }
+    .nav__sheet a { display: flex; align-items: center; min-height: 52px; padding: 0 16px; border-radius: 16px; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav__sheet a:active { background: var(--accent-50); color: var(--accent-700); }
+  }
+  @media (max-width: 360px) { .nav .btn--sm { padding: 0 14px; font-size: .875rem; } }
+</style>

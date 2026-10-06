@@ -1,4 +1,8 @@
 .DS_Store
 ._*
-.Spotlight-V100
-.Trashes
+.astro/
+.claude/
+.env
+dist/
+media-src/
+node_modules/

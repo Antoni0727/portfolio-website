@@ -1,0 +1,99 @@
+---
+import Label from './Label.astro';
+import VideoCard from './VideoCard.astro';
+import { longForm, shorts, longVisible, shortsVisible } from '../data/work';
+import { icons } from '../data/icons';
+
+const panels = [
+  { key: 'long', label: 'Long-form', items: longForm, visible: longVisible, short: false },
+  { key: 'reels', label: 'Reels', items: shorts, visible: shortsVisible, short: true },
+];
+---
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <div class="work__head">
+      <div>
+        <Label>Selected work</Label>
+        <h2 class="h2" id="work-title" data-split>Edits built to be <span class="sel" data-sel>watched</span></h2>
+      </div>
+      <div class="seg" role="tablist" aria-label="Video format" data-reveal data-seg>
+        <span class="seg__thumb" aria-hidden="true"></span>
+        {panels.map((p, i) => (
+          <button role="tab" id={`tab-${p.key}`} aria-controls={`panel-${p.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="panels" data-panels>
+      {panels.map((p, i) => {
+        const first = p.items.slice(0, p.visible);
+        const rest = p.items.slice(p.visible);
+        return (
+          <div class="panel" id={`panel-${p.key}`} role="tabpanel" aria-labelledby={`tab-${p.key}`} hidden={i !== 0}>
+            <div class:list={['grid', p.short ? 'grid--short' : 'grid--long']}>
+              {first.map((v) => <div class="panel__item" data-reveal={i === 0 ? '' : undefined}><VideoCard video={v} short={p.short} /></div>)}
+            </div>
+            {rest.length > 0 && (
+              <>
+                <div class="more-wrap" id={`more-${p.key}`} data-more-wrap>
+                  <div class:list={['grid', p.short ? 'grid--short' : 'grid--long']}>
+                    {rest.map((v) => <div class="panel__item"><VideoCard video={v} short={p.short} /></div>)}
+                  </div>
+                </div>
+                <div class="more">
+                  <button class="more__btn" type="button" aria-expanded="false" aria-controls={`more-${p.key}`} data-more>
+                    <span class="more__label">Show more</span>
+                    <span class="more__icon" aria-hidden="true" set:html={icons.chevron(14)} />
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 60px); }
+
+  .seg { position: relative; display: inline-flex; padding: 4px; border-radius: var(--r-pill); background: var(--bg-2); border: 1px solid var(--line); }
+  .seg button { position: relative; z-index: 1; min-width: 116px; height: 42px; padding: 0 18px; border-radius: var(--r-pill); font-size: .925rem; font-weight: 560; color: var(--ink-3); transition: color .5s var(--ease); }
+  .seg button[aria-selected="true"] { color: var(--ink); }
+  .seg__thumb { position: absolute; top: 4px; bottom: 4px; left: 0; width: 116px; border-radius: var(--r-pill); background: var(--surface); box-shadow: 0 1px 2px rgba(18,17,22,.06), 0 6px 16px rgba(18,17,22,.08); will-change: transform; }
+
+  .panels { position: relative; }
+  @media (max-width: 560px) {
+    .work__head { margin-bottom: 28px; }
+    .seg { display: flex; width: 100%; }
+    .seg button { flex: 1; min-width: 0; }
+  }
+  .panel[hidden] { display: none; }
+  .grid { display: grid; gap: clamp(18px, 2.2vw, 30px); }
+  .grid--long { grid-template-columns: repeat(2, 1fr); row-gap: clamp(32px, 4vw, 52px); }
+  .grid--short { grid-template-columns: repeat(4, 1fr); }
+  .more-wrap { height: 0; overflow: hidden; }
+  .more-wrap .grid--long { padding-top: clamp(32px, 4vw, 52px); }
+  .more-wrap .grid--short { padding-top: clamp(18px, 2.2vw, 30px); }
+  @media (max-width: 760px) {
+    .grid--long { grid-template-columns: 1fr; }
+    .grid--short { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  }
+
+  .more { display: flex; justify-content: center; margin-top: 44px; }
+  .more__btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 46px; padding: 0 20px 0 22px;
+    border-radius: var(--r-pill);
+    background: var(--surface); border: 1px solid var(--line-2);
+    font-size: .925rem; font-weight: 560; color: var(--ink);
+    box-shadow: var(--shadow-1);
+    transition: transform .8s var(--ease), border-color .8s var(--ease), color .8s var(--ease), box-shadow .9s var(--ease);
+  }
+  @media (hover: hover) { .more__btn:hover { transform: translateY(-2px); border-color: var(--accent-200); color: var(--accent-700); box-shadow: 0 0 0 4px rgba(107,75,255,.08), 0 14px 30px -12px rgba(60,30,180,.3); } }
+  .more__btn:active { transform: scale(.97); }
+  .more__label { display: inline-block; line-height: 1; }
+  .more__icon { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-50); color: var(--accent-700); transition: transform .8s var(--ease); }
+  .more__btn[aria-expanded="true"] .more__icon { transform: rotate(180deg); }
+</style>

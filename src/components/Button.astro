@@ -1,0 +1,37 @@
+---
+/* Primary/ghost pill. Hover: a light sweep passes over it and the arrow slips
+   out and back in. Renders <a> when href is set, otherwise <button>. */
+import { icons } from '../data/icons';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'ghost';
+  size?: 'md' | 'sm';
+  icon?: 'arrow' | 'mail' | 'x' | null;
+  external?: boolean;
+  cta?: boolean;
+  class?: string;
+  [key: string]: any;
+}
+const { href, variant = 'primary', size = 'md', icon = null, external = false, cta = false, class: cls = '', ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+const leading = icon && icon !== 'arrow' ? icons[icon](icon === 'x' ? 14 : 16) : '';
+const arrow = icons.arrow(16);
+---
+<Tag
+  class:list={['btn', `btn--${variant}`, size === 'sm' && 'btn--sm', cls]}
+  href={href}
+  type={href ? undefined : 'button'}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  data-cta={cta ? '' : undefined}
+  {...rest}
+>
+  {leading && <span class="btn__lead" set:html={leading} />}
+  <span class="btn__label"><slot /></span>
+  {icon === 'arrow' && <span class="btn__icon" set:html={arrow + arrow} />}
+</Tag>
+
+<style is:global>
+  .btn__lead { position: relative; z-index: 1; display: inline-grid; }
+</style>

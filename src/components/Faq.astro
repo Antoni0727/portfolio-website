@@ -1,0 +1,61 @@
+---
+import Label from './Label.astro';
+import Button from './Button.astro';
+import { faq } from '../data/content';
+---
+<section class="section section--tight" id="faq" aria-labelledby="faq-title">
+  <div class="container faq">
+    <div class="faq__head">
+      <Label>FAQ</Label>
+      <h2 class="h2" id="faq-title" data-split>Good <span class="sel" data-sel>questions</span></h2>
+      <p class="lead" data-reveal>Anything else on your mind? I'm one message away.</p>
+      <div data-reveal><Button variant="ghost" cta icon="arrow">Ask me directly</Button></div>
+    </div>
+
+    <ul class="faq__list" data-faq>
+      {faq.map((f, i) => (
+        <li class="qa" data-reveal>
+          <h3>
+            <button class="qa__q" type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`qa-${i}`} id={`qa-b-${i}`}>
+              <span class="qa__n num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="qa__text">{f.q}</span>
+              <span class="qa__icon" aria-hidden="true"><i></i><i></i></span>
+            </button>
+          </h3>
+          <div class="qa__a" id={`qa-${i}`} role="region" aria-labelledby={`qa-b-${i}`} hidden={i !== 0}>
+            <p>{f.a}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .faq { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(36px, 6vw, 100px); align-items: start; }
+  @media (max-width: 900px) { .faq { grid-template-columns: 1fr; } }
+  .faq__head .lead { margin: 18px 0 28px; }
+  @media (min-width: 901px) { .faq__head { position: sticky; top: calc(var(--nav-h) + 40px); } }
+
+  .faq__list { border-top: 1px solid var(--line-2); }
+  .qa { border-bottom: 1px solid var(--line-2); }
+  .qa h3 { font-size: inherit; font-weight: inherit; }
+  .qa__q {
+    display: grid; grid-template-columns: 44px 1fr 32px; align-items: center; gap: 8px;
+    width: 100%; min-height: 76px; padding: 18px 0; text-align: left;
+  }
+  .qa__n { font-size: .82rem; font-weight: 600; color: var(--ink-3); transition: color .5s var(--ease); }
+  .qa__text { font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); font-weight: 600; letter-spacing: -0.02em; transition: color .5s var(--ease), transform .7s var(--ease); }
+  @media (hover: hover) { .qa__q:hover .qa__text { transform: translateX(4px); } }
+  .qa__q[aria-expanded="true"] .qa__n { color: var(--accent-700); }
+  @media (hover: hover) { .qa__q:hover .qa__n { color: var(--accent-700); } }
+  .qa__icon { position: relative; width: 32px; height: 32px; border-radius: 50%; background: var(--bg-2); transition: background-color .6s var(--ease), transform .8s var(--ease); }
+  .qa__icon i { position: absolute; left: 50%; top: 50%; width: 11px; height: 1.8px; margin: -.9px 0 0 -5.5px; border-radius: 2px; background: var(--ink); transition: transform .8s var(--ease), background-color .6s var(--ease); }
+  .qa__icon i + i { transform: rotate(90deg); }
+  .qa__q[aria-expanded="true"] .qa__icon { background: var(--accent); transform: rotate(180deg); }
+  .qa__q[aria-expanded="true"] .qa__icon i { background: #fff; }
+  .qa__q[aria-expanded="true"] .qa__icon i + i { transform: rotate(0deg); }
+  .qa__a { overflow: hidden; }
+  .qa__a p { padding: 0 44px 26px 52px; color: var(--ink-3); max-width: 42em; }
+  @media (max-width: 560px) { .qa__a p { padding: 0 8px 22px 52px; } }
+</style>

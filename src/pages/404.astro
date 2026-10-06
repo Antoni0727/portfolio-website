@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+---
+<Base title="Page not found · Tony J Edits" noindex>
+  <section class="nf">
+    <div class="container nf__inner">
+      <p class="pill">Media offline</p>
+      <h1 class="nf__title" data-split>This cut didn't make the final <span class="sel" data-sel>edit</span></h1>
+      <p class="lead" data-reveal>The page you're looking for doesn't exist or was moved.</p>
+      <div class="nf__actions" data-reveal>
+        <Button href="/#work" icon="arrow">See the work</Button>
+        <Button variant="ghost" cta>Message me</Button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { min-height: 100svh; display: grid; place-items: center; padding: 140px 0 80px; }
+  .nf__inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .nf__title { margin-top: 28px; max-width: 11em; font-size: clamp(2.6rem, 1.4rem + 5vw, 5.5rem); line-height: 1; letter-spacing: -0.05em; }
+  .nf .lead { margin-top: 20px; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 34px; }
+</style>

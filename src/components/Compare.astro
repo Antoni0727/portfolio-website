@@ -1,0 +1,115 @@
+---
+/* Before/after wipe.
+   VIDEO MODE uses ONE side-by-side clip (public/compare/stack.mp4 + stack-sm.mp4 for phones):
+   left half = raw, right half = edit; audio left channel = raw, right channel = edit.
+   A canvas draws both halves from that single video, so they can never drift apart,
+   phones decode only one stream, and the sound switches by channel (no echo).
+   Until the files exist it shows a demo image pair. */
+import fs from 'node:fs';
+import path from 'node:path';
+import Label from './Label.astro';
+import { thumb } from '../data/work';
+
+const dir = path.join(process.cwd(), 'public', 'compare');
+const hasVideo = fs.existsSync(path.join(dir, 'stack.mp4')) && fs.existsSync(path.join(dir, 'stack-sm.mp4'));
+const demoImg = thumb.max('k8ZnU9B09vs');
+---
+<section class="section section--tight" id="compare" aria-labelledby="compare-title">
+  <div class="container">
+    <div class="head-center">
+      <Label>Raw → Edit</Label>
+      <h2 class="h2" id="compare-title" data-split>Drag the <span class="sel" data-sel>playhead</span></h2>
+      <p class="lead" data-reveal>Same footage, before and after. Pacing, color, captions, motion and sound: the difference is in the details.</p>
+    </div>
+
+    <div class="cmp" data-compare data-reveal-img>
+      {hasVideo ? (
+        <>
+          <canvas class="cmp__canvas" data-cmp-canvas aria-label="Raw footage on the left of the handle, finished edit on the right" role="img"
+            style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+          <video class="cmp__src" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"
+            style="position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none"
+            data-cmp-stack data-src="/compare/stack.mp4" data-src-sm="/compare/stack-sm.mp4"
+            data-poster="/compare/stack-poster.jpg" data-poster-sm="/compare/stack-sm-poster.jpg"
+            data-audio="/compare/stack-audio.m4a"></video>
+          <button class="cmp__sound" type="button" aria-pressed="false" data-cmp-sound>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="cmp__waves" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path class="cmp__mute" d="m16 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span data-cmp-sound-label>Sound off</span>
+          </button>
+        </>
+      ) : (
+        <>
+          <img class="cmp__media" src={demoImg} alt="Finished edit" width="1280" height="720" loading="lazy" draggable="false" />
+          {/* DEMO ONLY: a filtered copy standing in for raw footage */}
+          <div class="cmp__before"><img class="cmp__media cmp__demo-raw" src={demoImg} alt="Raw footage" width="1280" height="720" loading="lazy" draggable="false" /></div>
+        </>
+      )}
+      <span class="cmp__tag cmp__tag--l">Raw</span>
+      <span class="cmp__tag cmp__tag--r">Edit</span>
+      <div class="cmp__handle" aria-hidden="true">
+        <span class="cmp__head"></span>
+        <span class="cmp__grip"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 7 4 12l5 5M15 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+      <input class="cmp__range visually-hidden" type="range" min="0" max="100" value="50" aria-label="Before and after. Use arrow keys to move between the raw footage and the edit.">
+    </div>
+  </div>
+</section>
+
+<style>
+  .head-center { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: clamp(36px, 5vw, 60px); }
+  .head-center .lead { margin-top: 20px; }
+
+  .cmp {
+    --pos: 50%;
+    position: relative; max-width: 1060px; margin-inline: auto;
+    aspect-ratio: 16 / 9; border-radius: var(--r-l); overflow: hidden;
+    background: #0d0d10; box-shadow: var(--shadow-3);
+    cursor: ew-resize; touch-action: pan-y; user-select: none;
+  }
+  .cmp__media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; pointer-events: none; }
+  .cmp__before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .cmp__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* the source video must stay in the layout (iOS won't decode a display:none video), but invisible */
+  .cmp__src { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+  .cmp__demo-raw { filter: saturate(.3) contrast(.78) brightness(1.08); }
+
+  .cmp__tag {
+    position: absolute; top: 16px; padding: 6px 12px; border-radius: var(--r-pill);
+    background: rgba(18,17,22,.62); color: #fff; font-size: .78rem; font-weight: 600; letter-spacing: -0.005em;
+    pointer-events: none;
+  }
+  .cmp__tag--l { left: 16px; }
+  .cmp__tag--r { right: 16px; }
+
+  .cmp__handle { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; margin-left: -1px; background: #fff; box-shadow: 0 0 0 1px rgba(107,75,255,.4), 0 0 26px rgba(107,75,255,.55); pointer-events: none; transform: translateX(var(--px, 0px)); will-change: transform; }
+  .cmp__head { position: absolute; top: 0; left: 50%; width: 20px; height: 20px; transform: translateX(-50%); background: var(--accent); clip-path: polygon(0 0, 100% 0, 100% 58%, 50% 100%, 0 58%); border-radius: 3px; }
+  .cmp__grip {
+    position: absolute; top: 50%; left: 50%; display: grid; place-items: center;
+    width: 52px; height: 52px; border-radius: 50%; transform: translate(-50%, -50%);
+    background: rgba(253,253,254,.95); color: var(--accent-700);
+    box-shadow: 0 10px 30px rgba(0,0,0,.28);
+    transition: transform .6s var(--ease);
+  }
+  .cmp.is-dragging .cmp__grip { transform: translate(-50%, -50%) scale(1.12); }
+  @media (hover: hover) { .cmp:hover .cmp__grip { transform: translate(-50%, -50%) scale(1.12); } }
+  .cmp__sound {
+    position: absolute; right: 16px; bottom: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px 0 12px;
+    border-radius: var(--r-pill); background: rgba(18,17,22,.66); color: #fff;
+    font-size: .8rem; font-weight: 600; cursor: pointer;
+    transition: background-color .5s var(--ease), transform .6s var(--ease);
+  }
+  @media (hover: hover) { .cmp__sound:hover { background: rgba(18,17,22,.75); transform: translateY(-2px); } }
+  .cmp__sound[aria-pressed="true"] { background: var(--accent); }
+  .cmp__sound .cmp__waves { display: none; }
+  .cmp__sound[aria-pressed="true"] .cmp__waves { display: inline; }
+  .cmp__sound[aria-pressed="true"] .cmp__mute { display: none; }
+  @media (max-width: 640px) {
+    .cmp { aspect-ratio: 4 / 3; border-radius: 22px; }
+    .cmp__tag { top: 12px; font-size: .72rem; padding: 5px 10px; }
+    .cmp__tag--l { left: 12px; } .cmp__tag--r { right: 12px; }
+    .cmp__sound { right: 12px; bottom: 12px; height: 34px; }
+    .cmp__grip { width: 44px; height: 44px; }
+  }
+  .cmp:has(.cmp__range:focus-visible) { outline: 2px solid var(--accent); outline-offset: 4px; }
+</style>

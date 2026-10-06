@@ -1,0 +1,51 @@
+---
+import { site, socials } from '../data/site';
+import { icons } from '../data/icons';
+const year = new Date().getFullYear();
+const links = [
+  { href: socials.x, label: 'X (Twitter)', svg: icons.x(17) },
+  { href: socials.instagram, label: 'Instagram', svg: icons.instagram(18) },
+  { href: socials.youtube, label: 'YouTube', svg: icons.youtube(19) },
+  { href: socials.tiktok, label: 'TikTok', svg: icons.tiktok(17) },
+];
+---
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="/" class="brand">{site.name}</a>
+      <small>© {year} · Video editor based in {site.location} ({site.timezone})</small>
+      <small class="footer__credit">Tool logos are trademarks of their owners. DaVinci Resolve icon by Blackmagic Design, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</small>
+    </div>
+    <ul class="socials" aria-label="Social links">
+      {links.map((l) => (
+        <li><a href={l.href} target="_blank" rel="noopener" aria-label={l.label} set:html={l.svg} /></li>
+      ))}
+    </ul>
+    <a class="footer__top" href="#main" data-top>Back to top</a>
+  </div>
+</footer>
+
+<style>
+  .footer { padding: 24px 0 44px; }
+  .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-top: 32px; border-top: 1px solid var(--line); }
+  .footer__brand { display: flex; flex-direction: column; gap: 4px; }
+  .footer__brand small { color: var(--ink-3); font-size: .82rem; }
+  .footer__credit { font-size: .72rem !important; opacity: .75; }
+  .footer__credit a { text-decoration: underline; text-underline-offset: 2px; }
+  .socials { display: flex; gap: 4px; }
+  .socials a {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; border-radius: 50%;
+    color: var(--ink-2);
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease), transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  }
+  @media (hover: hover) { .socials a:hover { background: var(--surface); color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-1); } }
+  @media (max-width: 640px) {
+    .footer__inner { flex-direction: column; text-align: center; gap: 18px; }
+    .footer__brand { align-items: center; }
+    .footer__credit { max-width: 30em; }
+  }
+  .footer { padding-bottom: max(44px, calc(env(safe-area-inset-bottom) + 24px)); }
+  .footer__top { font-size: var(--fs-small); color: var(--ink-3); padding: 10px 0; transition: color var(--t) var(--ease); }
+  @media (hover: hover) { .footer__top:hover { color: var(--ink); } }
+</style>

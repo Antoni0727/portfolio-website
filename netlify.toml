@@ -1,2 +1,9 @@
+# Netlify build settings for the Astro site
 [build]
-  publish = "tonyjedits-portfolio-website/"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Security headers live in public/_headers (copied into dist on build).

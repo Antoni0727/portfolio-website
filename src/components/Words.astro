@@ -1,0 +1,129 @@
+---
+import Label from './Label.astro';
+import { Picture } from 'astro:assets';
+import tony from '../assets/tony.jpg';
+import { chat, comments } from '../data/content';
+import { icons } from '../data/icons';
+
+// group consecutive messages from the same person
+const msgs = chat.messages.map((m, i, all) => ({
+  ...m,
+  first: i === 0 || all[i - 1].name !== m.name,
+  last: i === all.length - 1 || all[i + 1].name !== m.name,
+}));
+const heart = `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1zm2 9V10.5l3.4-6.3a1.6 1.6 0 0 1 3 1L14.6 9H19a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 17.8 20z" fill="currentColor"/></svg>`;
+---
+<section class="section section--tight" id="words" aria-labelledby="words-title">
+  <div class="container">
+    <div class="head-center">
+      <Label>Kind words</Label>
+      <h2 class="h2" id="words-title" data-split>Straight from the <span class="sel" data-sel>DMs</span></h2>
+    </div>
+
+    <div class="words">
+      <div class="chat window" data-chat data-reveal>
+        <div class="window__bar">
+          <div class="lights" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="window__title">{chat.title}</span>
+          <span></span>
+        </div>
+        <div class="chat__body">
+          {msgs.map((m) => (
+            <figure class:list={['msg', `msg--${m.tone}`, m.first && 'is-first', m.last && 'is-last']} data-msg>
+              <span class="msg__avatar" aria-hidden="true">{m.last ? m.initial : ''}</span>
+              <div class="msg__content">
+                {m.first && <figcaption class="msg__who"><b>{m.name}</b><span>{m.role}</span></figcaption>}
+                <div class="msg__typing" aria-hidden="true" data-typing><i></i><i></i><i></i></div>
+                <blockquote class="msg__bubble" data-bubble>{m.quote}</blockquote>
+              </div>
+            </figure>
+          ))}
+
+          <figure class="msg msg--me is-first is-last" data-msg>
+            <span class="msg__avatar msg__avatar--me" aria-hidden="true"><Picture src={tony} formats={['avif', 'webp']} width={72} height={72} alt="" /></span>
+            <div class="msg__content">
+              <figcaption class="msg__who"><b>Tony</b></figcaption>
+              <div class="msg__typing" aria-hidden="true" data-typing><i></i><i></i><i></i></div>
+              <blockquote class="msg__bubble" data-bubble>{chat.reply}</blockquote>
+            </div>
+          </figure>
+        </div>
+      </div>
+
+      <div class="yt window" data-comments data-reveal>
+        <div class="window__bar">
+          <div class="lights" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="window__title yt__title"><i set:html={icons.youtube(14)} />Comments on my channel</span>
+          <span></span>
+        </div>
+        <ul class="yt__list">
+          {comments.map((c) => (
+            <li class:list={['yt__item', `yt__item--${c.tone}`]} data-comment>
+              <span class="yt__avatar" aria-hidden="true">{c.handle.slice(1, 2).toUpperCase()}</span>
+              <figure>
+                <figcaption><b>{c.handle}</b><span>on “{c.video}”</span></figcaption>
+                <blockquote>{c.text}</blockquote>
+                <div class="yt__actions"><span aria-hidden="true" set:html={heart} /><span class="yt__reply" aria-hidden="true">Reply</span><span class="yt__creator" title="Hearted by @tonyjedits"><Picture src={tony} formats={['avif', 'webp']} width={40} height={40} alt="" /><i aria-hidden="true">♥</i><span class="visually-hidden">Hearted by @tonyjedits</span></span></div>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .head-center { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: clamp(36px, 5vw, 56px); }
+  .words { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: clamp(16px, 2vw, 24px); align-items: stretch; }
+  @media (max-width: 900px) { .words { grid-template-columns: 1fr; max-width: 680px; margin-inline: auto; } }
+
+  .chat__body { display: flex; flex-direction: column; padding: 14px clamp(16px, 3vw, 28px) 28px; }
+  .msg { display: flex; align-items: flex-end; gap: 10px; max-width: 90%; margin-top: 4px; }
+  .msg.is-first { margin-top: 20px; }
+  .msg:first-child { margin-top: 6px; }
+  .msg__avatar { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #fff; font-weight: 700; font-size: .85rem; overflow: hidden; }
+  .msg:not(.is-last) .msg__avatar { visibility: hidden; }
+  .msg--violet .msg__avatar { background: linear-gradient(140deg, #B9A9FF, #6B4BFF); }
+  .msg--rose .msg__avatar { background: linear-gradient(140deg, #FFC1DA, #E5579A); }
+  .msg__avatar--me :global(picture), .msg__avatar--me :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .msg__who { display: flex; gap: 8px; align-items: baseline; margin: 0 6px 6px; font-size: .8rem; }
+  .msg__who b { font-weight: 620; }
+  .msg__who span { color: var(--ink-3); }
+
+  .msg__bubble { padding: 12px 17px; border-radius: 20px; background: var(--bg-2); color: var(--ink); font-size: 1rem; line-height: 1.5; }
+  .msg.is-first:not(.is-last) .msg__bubble { border-bottom-left-radius: 8px; }
+  .msg:not(.is-first):not(.is-last) .msg__bubble { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+  .msg.is-last:not(.is-first) .msg__bubble { border-top-left-radius: 8px; border-bottom-left-radius: 6px; }
+  .msg.is-first.is-last .msg__bubble { border-bottom-left-radius: 6px; }
+  .msg--violet .msg__bubble { background: #EFEBFF; }
+  .msg--rose .msg__bubble { background: #FDEBF3; }
+
+  .msg--me { align-self: flex-end; flex-direction: row-reverse; margin-top: 26px; }
+  .msg--me .msg__who { justify-content: flex-end; }
+  .msg--me .msg__bubble { background: var(--accent); color: #fff; border-radius: 20px 20px 6px 20px !important; }
+
+  .msg__typing { display: none; gap: 4px; width: fit-content; padding: 14px 16px; border-radius: 20px 20px 20px 6px; background: var(--bg-2); }
+  .msg--me .msg__typing { margin-left: auto; border-radius: 20px 20px 6px 20px; background: var(--accent-200); }
+  .msg__typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); opacity: .5; }
+  :global(.js) .msg, :global(.js) .yt__item { opacity: 0; }
+
+  .yt__title { display: inline-flex; align-items: center; gap: 7px; }
+  .yt__title :global(svg) { color: #FF0033; }
+  .yt__list { display: flex; flex-direction: column; padding: 8px clamp(16px, 3vw, 26px) 22px; }
+  .yt__item { display: flex; gap: 12px; padding: 16px 0; }
+  .yt__item + .yt__item { border-top: 1px solid var(--line); }
+  .yt__avatar { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: #fff; font-weight: 700; font-size: .9rem; }
+  .yt__item--violet .yt__avatar { background: linear-gradient(140deg, #B9A9FF, #6B4BFF); }
+  .yt__item--blue .yt__avatar { background: linear-gradient(140deg, #9FD3FF, #3B82F6); }
+  .yt__item--rose .yt__avatar { background: linear-gradient(140deg, #FFC1DA, #E5579A); }
+  .yt__item figcaption { display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; font-size: .8rem; }
+  .yt__item figcaption b { font-weight: 640; }
+  .yt__item figcaption span { color: var(--ink-3); }
+  .yt__item blockquote { margin-top: 5px; color: var(--ink); line-height: 1.5; }
+  .yt__actions { display: flex; align-items: center; gap: 14px; margin-top: 8px; font-size: .76rem; font-weight: 600; color: var(--ink-3); }
+  .yt__actions span { display: inline-flex; }
+  .yt__creator { position: relative; }
+  .yt__creator :global(picture), .yt__creator :global(img) { display: block; width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+  .yt__creator i { position: absolute; right: -6px; bottom: -4px; font-style: normal; font-size: .62rem; line-height: 1; color: #E5484D; text-shadow: 0 0 0 #fff, 1px 0 #fff, -1px 0 #fff, 0 1px #fff, 0 -1px #fff; }
+</style>
