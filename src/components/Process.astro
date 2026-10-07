@@ -42,31 +42,6 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
       </li>
 
       <!-- 02 -->
-      <li class="step" data-reveal data-step="story">
-        <div class="step__art" aria-hidden="true">
-          <div class="board">
-            <div class="board__row">
-              {[['Hook', 'face'], ['Setup', 'text'], ['Value', 'screen'], ['Offer', 'face']].map(([label, kind], i) => (
-                <figure class="board__frame" data-frame>
-                  <span class="board__shot" data-kind={kind}>
-                    {kind === 'face' && <><i class="board__head"></i><i class="board__body"></i></>}
-                    {kind === 'text' && <><i class="board__line"></i><i class="board__line board__line--s"></i></>}
-                    {kind === 'screen' && <><i class="board__ui"></i><i class="board__ui board__ui--b"></i></>}
-                  </span>
-                  <figcaption><b class="num">{String(i + 1).padStart(2, '0')}</b>{label}</figcaption>
-                </figure>
-              ))}
-              <svg class="board__link" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path data-link d="M6 5 H94" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2.5" vector-effect="non-scaling-stroke"/></svg>
-            </div>
-            <span class="board__msg" data-msg-plan><i data-msg-icon></i><span data-msg-text>Plan sent to you</span></span>
-          </div>
-        </div>
-        <span class="step__num num">02</span>
-        <h3 class="step__title">Plan, story &amp; pacing</h3>
-        <p class="step__text">First I storyboard the video and run the plan by you. Then I pick the best takes, cut what drags and set the rhythm, so it flows from the first second to your offer.</p>
-      </li>
-
-      <!-- 03 -->
       <li class="step" data-reveal data-step="polish">
         <div class="step__art" aria-hidden="true">
           <div class="polish">
@@ -91,9 +66,26 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
             </div>
           </div>
         </div>
+        <span class="step__num num">02</span>
+        <h3 class="step__title">I edit the video</h3>
+        <p class="step__text">Cutting, pacing and storytelling first, then motion graphics, captions, color, sound design and music, all shaped around your viewers.</p>
+      </li>
+
+      <!-- 03 -->
+      <li class="step" data-reveal data-step="updates">
+        <div class="step__art" aria-hidden="true">
+          <div class="upd">
+            <ul class="upd__list">
+              <li class="upd__item" data-upd><i class="upd__dot"></i><span>Footage received</span><span class="upd__time">Mon</span></li>
+              <li class="upd__item" data-upd><i class="upd__dot"></i><span>First cut is ready</span><span class="upd__time">Tue</span></li>
+              <li class="upd__item" data-upd><i class="upd__dot"></i><span>Final edit uploaded</span><span class="upd__time">Wed</span></li>
+            </ul>
+            <span class="upd__ok" data-upd-ok><i set:html={icons.check(10)} />Approved</span>
+          </div>
+        </div>
         <span class="step__num num">03</span>
-        <h3 class="step__title">Sound, motion &amp; color</h3>
-        <p class="step__text">Sound design and music, motion graphics, captions and color in DaVinci Resolve, with design work in Affinity and Figma and tracks from Epidemic Sound.</p>
+        <h3 class="step__title">Updates &amp; approval</h3>
+        <p class="step__text">I keep you posted while the edit comes together, then send the finished video for you to review and approve.</p>
       </li>
 
       <!-- 04 -->
@@ -105,7 +97,7 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
               <div class="up__body">
                 <img class="up__thumb" src={pubThumb} alt="" width="320" height="180" loading="lazy" draggable="false" />
                 <div class="up__info">
-                  <b>final_v2.mp4</b>
+                  <b>final.mp4</b>
                   <span class="up__status num" data-status>Uploading… 0%</span>
                   <span class="up__progress"><i data-progress></i></span>
                 </div>
@@ -117,7 +109,7 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
         </div>
         <span class="step__num num">04</span>
         <h3 class="step__title">Ready to upload</h3>
-        <p class="step__text">The final video lands in your Drive, ready to post. Need Shorts cut from it too? I'll do those as well.</p>
+        <p class="step__text">The final video lands in your Drive, ready to post. Exported in the right format with clear file names, so there's nothing left for you to fix.</p>
       </li>
     </ol>
   </div>
@@ -176,24 +168,24 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
   .drop__bar { height: 6px; border-radius: 6px; background: rgba(107,75,255,.16); overflow: hidden; }
   .drop__bar i { display: block; height: 100%; border-radius: inherit; background: var(--accent); transform-origin: left; transform: scaleX(0); }
 
-  /* 02 storyboard */
-  .board { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 0 20px; }
-  .board__row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 440px; }
-  .board__frame { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 7px; }
-  .board__shot { position: relative; display: block; aspect-ratio: 16 / 11; border-radius: 9px; background: var(--surface); border: 1.5px solid var(--sketch-line); box-shadow: 0 6px 14px -8px rgba(18,17,22,.25); overflow: hidden; transition: transform .8s var(--ease); }
-  .board__head { position: absolute; left: 50%; top: 22%; width: 26%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; border: 1.5px solid var(--sketch); }
-  .board__body { position: absolute; left: 50%; bottom: -12%; width: 56%; height: 38%; transform: translateX(-50%); border-radius: 50% 50% 0 0; border: 1.5px solid var(--sketch); border-bottom: 0; }
-  .board__line { position: absolute; left: 16%; right: 16%; top: 38%; height: 5px; border-radius: 4px; background: rgba(107,75,255,.55); }
-  .board__line--s { top: 56%; right: 34%; background: var(--sketch-soft); }
-  .board__ui { position: absolute; left: 12%; right: 12%; top: 18%; height: 34%; border-radius: 4px; border: 1.5px solid var(--sketch); }
-  .board__ui--b { top: 62%; height: 14%; right: 46%; background: rgba(107,75,255,.5); border: 0; }
-  .board__frame figcaption { display: flex; gap: 5px; align-items: baseline; font-size: .74rem; font-weight: 600; color: var(--ink-2); }
-  .board__frame figcaption b { font-size: .66rem; color: var(--accent-700); }
-  .board__link { position: absolute; left: 0; right: 0; top: 34%; z-index: 0; width: 100%; height: 10px; color: var(--accent); overflow: visible; }
-  .board__msg { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px 7px 9px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--line); box-shadow: 0 8px 18px -10px rgba(18,17,22,.3); font-size: .78rem; font-weight: 600; color: var(--ink-2); opacity: 0; }
-  .board__msg i { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); box-shadow: inset 0 0 0 4px #fff, 0 0 0 1px var(--accent-200); }
-  .board__msg.is-approved { color: var(--ok); }
-  .board__msg.is-approved i { background: var(--ok); box-shadow: none; }
+  /* 03 updates */
+  .upd { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 22px; }
+  .upd__list { width: 100%; max-width: 330px; display: flex; flex-direction: column; gap: 8px; }
+  .upd__item {
+    display: grid; grid-template-columns: 18px 1fr auto; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 16px -10px rgba(18,17,22,.25);
+    font-size: .8rem; font-weight: 560; color: var(--ink-2);
+  }
+  .upd__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-50); justify-self: center; }
+  .upd__time { font-size: .7rem; font-weight: 500; color: var(--ink-3); }
+  .upd__ok {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 13px 6px 7px; border-radius: var(--r-pill);
+    background: var(--surface); border: 1px solid var(--line); box-shadow: 0 8px 18px -10px rgba(18,17,22,.3);
+    font-size: .78rem; font-weight: 650; color: var(--ok); opacity: 0;
+  }
+  .upd__ok i { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--ok); color: #fff; }
 
   /* 03 polish: one centered group (editor + tool icons) */
   .polish { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 0 22px; }
@@ -240,12 +232,12 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
     .step:hover .tool:nth-child(3) { transform: translateY(-9px) rotate(2deg); transition-delay: .1s; }
     .step:hover .tool:nth-child(4) { transform: translateY(-6px) rotate(6deg); transition-delay: .15s; }
     .step:hover .drop__folder { transform: translateX(-50%) translateY(-6px) rotate(-1.5deg); }
-    .step:hover .board__frame:nth-child(odd) .board__shot { transform: translateY(-4px) rotate(-2deg); }
-    .step:hover .board__frame:nth-child(even) .board__shot { transform: translateY(-4px) rotate(2deg); }
+    .step:hover .upd__item:nth-child(odd) { transform: translateX(-4px); }
+    .step:hover .upd__item:nth-child(even) { transform: translateX(4px); }
     .step:hover .up__win { transform: translateY(-6px) scale(1.02); }
     .step:hover .polish__ui { transform: translateY(-3px); }
   }
-  .drop__folder, .up__win { transition: transform .8s var(--ease); }
+  .drop__folder, .up__win, .upd__item { transition: transform .8s var(--ease); }
 
   /* 04 upload dialog */
   .up { position: absolute; inset: 0; display: grid; place-items: center; }

@@ -43,7 +43,7 @@ export function initAbout() {
   if (fill) {
     if (reduceMotion) gsap.set(fill, { scaleX: 1, scaleY: 1 });
     else {
-      const vertical = window.matchMedia('(max-width: 560px)').matches;
+      const vertical = window.matchMedia('(max-width: 620px), (min-width: 901px) and (max-width: 1080px)').matches;
       gsap.fromTo(fill, vertical ? { scaleY: 0, scaleX: 1 } : { scaleX: 0 }, {
         ...(vertical ? { scaleY: 1 } : { scaleX: 1 }), ease: 'none',
         scrollTrigger: { trigger: '[data-journey]', start: 'top 85%', end: 'bottom 55%', scrub: 1 },
@@ -117,6 +117,14 @@ export function initWhyTable() {
   const them = $$('[data-vs-them]', table);
   const links = $$('[data-vs-link] i', table);
   const me = $$('[data-vs-me]', table);
+  // hovering any part of a row lights up both answers of that row
+  if (matchMedia('(hover: hover)').matches) {
+    const rows = them.map((t, i) => [t, links[i].parentElement!, me[i]]);
+    rows.forEach((row) => row.forEach((el) => {
+      el.addEventListener('pointerenter', () => row.forEach((r) => r.classList.add('is-hot')));
+      el.addEventListener('pointerleave', () => row.forEach((r) => r.classList.remove('is-hot')));
+    }));
+  }
   if (reduceMotion) { gsap.set([...them, ...me], { opacity: 1 }); gsap.set(links, { scaleX: 1 }); return; }
   const tl = gsap.timeline({ paused: true });
   them.forEach((t, i) => {

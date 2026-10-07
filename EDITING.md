@@ -17,16 +17,15 @@ for the exact words you see on the site — that takes you straight to them.
 | Client messages (Joseph, Ava) + your reply | `src/data/content.ts` | `chat` |
 | YouTube comments | `src/data/content.ts` | `comments` |
 | FAQ questions and answers | `src/data/content.ts` | `faq` |
-| Hero headline + buttons | `src/components/Hero.astro` | `Edits that turn attention into` |
-| "Selected work" heading | `src/components/Work.astro` | `Edits built to be` |
+| Hero headline + buttons | `src/components/Hero.astro` | `Edits that turn content into` |
+| "Selected work" heading | `src/components/Work.astro` | `Videos edited to be` |
 | "Drag the playhead" section text | `src/components/Compare.astro` | `Drag the` |
 | Process steps (titles + text) | `src/components/Process.astro` | `step__title`, `step__text` |
-| "Why me" heading + line under it | `src/components/Why.astro` | `Most editors edit for` |
-| About text + the 2024 / 2025 / Now timeline | `src/components/About.astro` | `journey` (top) and `prose` |
-| Skills chips under About | `src/components/About.astro` | `Hooks &amp; retention` |
+| "Why me" heading + line under it | `src/components/Why.astro` | `Most edits try to` |
+| About text + the 2019 / 2024 / 2025 / Now timeline | `src/components/About.astro` | `journey` (top) and `prose` |
 | Final contact card | `src/components/ContactCta.astro` | `Let's make your next video` |
 | "Message me" pop-up window text | `src/components/ContactWindow.astro` | `Let's talk about your next video` |
-| Footer line | `src/components/Footer.astro` | `Video editor based in` |
+| Footer line | `src/components/Footer.astro` | `Video editor for creators` |
 
 Notes:
 - In `.astro` files, an `&` is written as `&amp;` and an apostrophe is fine as `'`.

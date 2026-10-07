@@ -13,17 +13,17 @@ export type Video = {
 };
 
 export const longForm: Video[] = [
-  { id: 'IUX8xiyFTaY', title: 'This Lead Gen Strategy Is Boring, But It Generated $230K In 90 Days', meta: ['Client edit', 'Full long-form', 'Aqil Jannaty'], zoom: 1.016 },
+  { id: 'IUX8xiyFTaY', title: 'The $230K lead gen strategy', meta: ['Client edit', 'Long-form', 'Aqil Jannaty'], zoom: 1.016 },
   {
     id: 'fMaZWbqDzgA',
-    title: "I Made 1000+ TikTok Shop Videos, Here's What Makes £££ In 2026",
-    meta: ['Client edit', 'Full long-form', 'Wayne Kitula'],
+    title: 'What sells on TikTok Shop',
+    meta: ['Client edit', 'Long-form', 'Wayne Kitula'],
     thumb: 'https://i.ytimg.com/vi/fMaZWbqDzgA/hqdefault.jpg',
   },
-  { id: 'Fi7qFo-3BEc', title: 'Opening edit for Karl', meta: ['Client trial', 'Long-form intro', 'Karl'] },
-  { id: 'ADEbq_VHSOA', title: '30-second edit for Will', meta: ['Client trial', '30-second cut', 'Will'] },
-  { id: 'k8ZnU9B09vs', title: 'Never Recreate the Same Animation Again', meta: ['Own channel', 'Full edit', 'Motion graphics'] },
-  { id: 'tJdb3OdB7I8', title: 'The Gradient Technique Nobody Shows You', meta: ['Own channel', 'Full edit', 'Tutorial'] },
+  { id: 'Fi7qFo-3BEc', title: 'Hook & intro for Karl', meta: ['Client trial', 'Long-form intro', 'Karl'] },
+  { id: 'ADEbq_VHSOA', title: 'Hook & intro for Will', meta: ['Client trial', 'Long-form intro', 'Will'] },
+  { id: 'k8ZnU9B09vs', title: 'Reusable animations in Resolve', meta: ['Own channel', 'Long-form', 'Motion graphics'] },
+  { id: 'tJdb3OdB7I8', title: 'The gradient technique', meta: ['Own channel', 'Long-form', 'Tutorial'] },
 ];
 
 export const shorts: Video[] = [

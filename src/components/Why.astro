@@ -9,10 +9,10 @@ import { comparison } from '../data/content';
     <div class="why__head">
       <Label>Why me</Label>
       <h2 class="h2 why__title" id="why-title" data-split>
-        Most editors edit for <span class="strike" data-strike>editors</span><br>
-        I edit for the <span class="sel" data-sel>viewer</span>
+        Most edits try to <span class="strike" data-strike>impress</span><br>
+        Mine are made for the <span class="sel" data-sel>viewer</span>
       </h2>
-      <p class="lead" data-reveal>Flashy effects don't keep people watching. Story, pacing, sound and color do.</p>
+      <p class="lead" data-reveal>Flashy, chaotic effects don't keep people watching. Story, pacing, sound, clean animation and color do.</p>
     </div>
 
     <div class="vs" data-vs>
@@ -101,6 +101,29 @@ import { comparison } from '../data/content';
   .vs__link { position: relative; display: flex; align-items: center; }
   .vs__link i { position: relative; display: block; width: 100%; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--line-2), var(--accent)); transform-origin: left; }
   .vs__link i::after { content: ""; position: absolute; right: -1px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+  /* row hover: my answer glows, the other side lights up softly */
+  .vs__cell { position: relative; }
+  .vs__cell::before {
+    content: ""; position: absolute; z-index: -1; inset: 6px -14px; border-radius: 16px;
+    opacity: 0; transform: scale(.97); transition: opacity .35s var(--ease), transform .45s var(--ease);
+  }
+  .vs__cell--them::before { background: var(--surface); box-shadow: 0 0 0 1px var(--line), 0 8px 22px -14px rgba(18,17,22,.25); }
+  .vs__cell--me::before {
+    background: rgba(255,255,255,.2);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.4), 0 0 42px -2px rgba(214,170,255,.9), 0 0 0 4px rgba(255,255,255,.06);
+  }
+  .vs__check { transition: scale .4s var(--ease), box-shadow .4s var(--ease); }
+  .vs__x { transition: box-shadow .35s var(--ease); }
+  .vs__cell--them span { transition: color .35s var(--ease); }
+  .vs__link i { transition: box-shadow .35s var(--ease), filter .35s var(--ease); }
+  @media (hover: hover) {
+    .vs__cell.is-hot::before { opacity: 1; transform: none; }
+    .vs__cell--them.is-hot span { color: var(--ink-2); }
+    .vs__cell--them.is-hot .vs__x { box-shadow: inset 0 0 0 1px var(--ink-3); }
+    .vs__cell--me.is-hot .vs__check { scale: 1.14; box-shadow: 0 0 0 4px rgba(255,255,255,.18), 0 0 22px rgba(255,255,255,.7); }
+    .vs__link.is-hot i { filter: brightness(1.25); box-shadow: 0 0 12px var(--accent); }
+  }
 
   @media (max-width: 640px) {
     .vs { grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1.08fr); }

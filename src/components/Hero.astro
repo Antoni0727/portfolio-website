@@ -14,7 +14,8 @@ const clips = picks.map((v, i) => {
   acc += weights[i];
   return { ...v, start, end: acc / total, src: v.thumb ?? thumb.max(v.id), strip: v.thumb ?? thumb.mid(v.id), zoom: v.zoom ?? 1 };
 });
-const titleBlocks = ['Hook', 'Title', 'Lower third', 'Call to action'];
+// graphics layers above the video track (what an editor adds on top of the footage)
+const titleBlocks = ['Hook', 'Captions', 'Motion', 'Call to action'];
 
 /* Deterministic waveform bars (stable between builds) */
 function wave(n: number, seed: number, floor = 0.14) {
@@ -52,7 +53,7 @@ const sfx = [0.07, 0.24, 0.43, 0.61, 0.79, 0.9];
   <div class="container hero__inner">
     <p class="pill" data-hero-item><span class="pill__dot" aria-hidden="true"></span>Open to new projects</p>
     <h1 class="hero__title" id="hero-title" data-hero-title data-split>
-      Edits that turn attention into <span class="sel" data-sel>growth</span>
+      Edits that turn content into <span class="sel" data-sel>growth</span>
     </h1>
     <div class="hero__actions" data-hero-item>
       <Button cta icon="arrow">Message me</Button>

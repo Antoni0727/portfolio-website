@@ -17,7 +17,7 @@ function loopWhenVisible(card: HTMLElement, tl: gsap.core.Timeline) {
 export function initProcess() {
   if (reduceMotion) return staticStates();
   stepDrop();
-  stepStory();
+  stepUpdates();
   stepPolish();
   stepPublish();
 }
@@ -44,25 +44,19 @@ function stepDrop() {
   loopWhenVisible(card, tl);
 }
 
-/* 02: storyboard frames appear, get connected, the plan is sent and approved */
-function stepStory() {
-  const card = $('[data-step="story"]');
+/* 03: updates arrive one by one, then the video is approved */
+function stepUpdates() {
+  const card = $('[data-step="updates"]');
   if (!card) return;
-  const frames = $$('[data-frame]', card);
-  const link = $<SVGPathElement>('[data-link]', card)!;
-  const msg = $('[data-msg-plan]', card)!;
-  const text = $('[data-msg-text]', card)!;
+  const items = $$('[data-upd]', card);
+  const ok = $('[data-upd-ok]', card)!;
   const tl = gsap.timeline({ repeat: -1, repeatDelay: .8 });
-  tl.call(() => { msg.classList.remove('is-approved'); text.textContent = 'Plan sent to you'; })
-    .set(msg, { opacity: 0, y: 10 })
-    .set(link, { strokeDashoffset: 0, opacity: 0 })
-    .fromTo(frames, { opacity: 0, y: 16, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .8, ease: 'back.out(1.6)', stagger: .3 }, .3)
-    .fromTo(link, { opacity: 0, clipPath: 'inset(0 100% 0 0)' }, { opacity: 1, clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power2.inOut' }, '-=.3')
-    .to(msg, { opacity: 1, y: 0, duration: .7, ease: 'back.out(1.8)' }, '+=.1')
-    .call(() => { msg.classList.add('is-approved'); text.textContent = 'Approved ✓'; }, [], '+=1.1')
-    .fromTo(msg, { scale: .94 }, { scale: 1, duration: .5, ease: 'back.out(3)' }, '<')
-    .to({}, { duration: 2 })
-    .to([...frames, msg, link], { opacity: 0, y: -8, duration: .5, ease: 'power2.in', stagger: .04 });
+  tl.set(items, { opacity: 0, y: 12 })
+    .set(ok, { opacity: 0, y: 8, scale: .94 })
+    .to(items, { opacity: 1, y: 0, duration: .6, ease: 'back.out(1.6)', stagger: .7 }, .3)
+    .to(ok, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'back.out(2)' }, '+=.4')
+    .to({}, { duration: 2.4 })
+    .to([...items, ok], { opacity: 0, y: -8, duration: .45, ease: 'power2.in', stagger: .05 });
   loopWhenVisible(card, tl);
 }
 
@@ -128,7 +122,7 @@ function stepPublish() {
 
 function staticStates() {
   $$('[data-file]').forEach((f) => (f.style.opacity = '0'));
-  $$('[data-msg-plan], [data-cap]').forEach((el) => (el.style.opacity = '1'));
+  $$('[data-upd-ok], [data-upd], [data-cap]').forEach((el) => (el.style.opacity = '1'));
   $$('[data-bar], [data-progress]').forEach((b) => gsap.set(b, { scaleX: 1 }));
   $$('[data-mark]').forEach((m) => (m.style.backgroundSize = '100% 100%'));
   $$('[data-grade]').forEach((g) => (g.style.opacity = '.95'));

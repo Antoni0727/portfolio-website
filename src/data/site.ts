@@ -3,9 +3,9 @@
 export const site = {
   name: 'Tony J Edits',
   handle: 'tonyjedits',
-  title: 'Tony J Edits · YouTube & Short-Form Video Editor for Creators',
+  title: 'Tony J Edits · Long & Short-Form Video Editor for Creators',
   description:
-    'YouTube and short-form video editing for creators who sell courses and digital products. Story-first edits with strong hooks, pacing and sound design.',
+    'Long and short-form video editing for creators who sell online. Story-first edits with strong hooks, clean motion, sound design and color.',
   email: 'tonyjedits@gmail.com',
   location: 'Poland',
   timezone: 'CET',
