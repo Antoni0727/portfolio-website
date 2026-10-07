@@ -135,13 +135,24 @@ export function initWhyTable() {
   const links = $$('[data-vs-link] i', table);
   const me = $$('[data-vs-me]', table);
   const shine = $('[data-vs-shine]', table);
-  // hovering any part of a row lights up both answers of that row
+  // hovering any part of a row lights up both answers of that row (tracked per row, so moving
+  // across the row never flickers off and on)
   if (matchMedia('(hover: hover)').matches) {
     const rows = them.map((t, i) => [t, links[i].parentElement!, me[i]]);
-    rows.forEach((row) => row.forEach((el) => {
-      el.addEventListener('pointerenter', () => row.forEach((r) => r.classList.add('is-hot')));
-      el.addEventListener('pointerleave', () => row.forEach((r) => r.classList.remove('is-hot')));
-    }));
+    const rowOf = new Map<Element, number>();
+    rows.forEach((row, i) => row.forEach((el) => rowOf.set(el, i)));
+    let hot = -1;
+    const setHot = (i: number) => {
+      if (i === hot) return;
+      if (hot > -1) rows[hot].forEach((el) => el.classList.remove('is-hot'));
+      hot = i;
+      if (hot > -1) rows[hot].forEach((el) => el.classList.add('is-hot'));
+    };
+    table.addEventListener('pointerover', (e) => {
+      const el = (e.target as Element).closest('[data-vs-them], [data-vs-link], [data-vs-me]');
+      setHot(el ? rowOf.get(el) ?? -1 : -1);
+    });
+    table.addEventListener('pointerleave', () => setHot(-1));
   }
   if (reduceMotion) { gsap.set([...panels, ...heads, ...them, ...me], { opacity: 1 }); gsap.set(links, { scaleX: 1 }); return; }
 
