@@ -35,7 +35,7 @@ const schema = {
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- Runs before first paint: picks the theme (saved choice, else the device setting) and marks JS as on,
        so nothing flashes. Its sha256 hash is allowed in public/_headers; update it if you edit this line. -->
-  <script is:inline>(function(){var d=document.documentElement,t;try{t=localStorage.getItem('theme')}catch(e){}d.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');d.classList.add('js')})()</script>
+  <script is:inline>(function(){var d=document.documentElement,t;try{t=sessionStorage.getItem('theme')}catch(e){}d.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');d.classList.add('js')})()</script>
   <title>{title}</title>
   <meta name="description" content={description}>
   <link rel="canonical" href={canonical}>

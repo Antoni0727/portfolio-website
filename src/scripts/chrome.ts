@@ -146,16 +146,19 @@ export function initTheme() {
   const root = document.documentElement;
   const btn = $('[data-theme-toggle]');
   const sys = window.matchMedia('(prefers-color-scheme: dark)');
-  const saved = () => { try { return localStorage.getItem('theme'); } catch { return null; } };
+  // the switch is a per-visit override (sessionStorage); every new visit follows the device again
+  const saved = () => { try { return sessionStorage.getItem('theme'); } catch { return null; } };
+  try { localStorage.removeItem('theme'); } catch {} // drop the old, permanent choice
   const label = () => btn?.setAttribute('aria-label', root.dataset.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
   const apply = (t: string) => { root.dataset.theme = t; label(); };
   label();
 
-  sys.addEventListener('change', (e) => { if (!saved()) apply(e.matches ? 'dark' : 'light'); });
+  // device switches light/dark (e.g. at sunset): follow it and forget the override
+  sys.addEventListener('change', (e) => { try { sessionStorage.removeItem('theme'); } catch {} apply(e.matches ? 'dark' : 'light'); });
 
   btn?.addEventListener('click', () => {
     const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('theme', next); } catch {}
+    try { sessionStorage.setItem('theme', next); } catch {}
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
     if (!doc.startViewTransition || reduceMotion) { apply(next); return; }
     // circular reveal from the switch

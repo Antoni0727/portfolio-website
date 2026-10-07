@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, refreshSoon, lenis, $, $$, reduceMotion } from './core';
+import { gsap, ScrollTrigger, refreshSoon, $, $$, reduceMotion } from './core';
 
 /* Chat: typing dots, then each message appears */
 export function initChat() {
@@ -57,38 +57,20 @@ export function initFaq() {
   const list = $('[data-faq]');
   if (!list) return;
   const items = $$('.qa', list).map((li) => ({ btn: $<HTMLButtonElement>('.qa__q', li)!, panel: $('.qa__a', li)! }));
-  const isOpen = (it: (typeof items)[number]) => it.btn.getAttribute('aria-expanded') === 'true';
   const dur = reduceMotion ? 0 : .5;
   const ease = 'power3.inOut';
 
-  const close = ({ btn, panel }: (typeof items)[number]) => {
-    btn.setAttribute('aria-expanded', 'false');
-    gsap.to(panel, { height: 0, opacity: 0, duration: dur, ease, overwrite: true, onComplete: () => { panel.hidden = true; gsap.set(panel, { clearProps: 'height,opacity' }); } });
-  };
-  const open = ({ btn, panel }: (typeof items)[number]) => {
-    btn.setAttribute('aria-expanded', 'true');
-    panel.hidden = false;
-    gsap.fromTo(panel, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: dur, ease, overwrite: true, onComplete: () => { gsap.set(panel, { clearProps: 'height' }); } });
-  };
-  // when an answer above collapses, keep the tapped question still on screen instead of letting it jump up
-  const pin = (el: HTMLElement) => {
-    const top = el.getBoundingClientRect().top;
-    const hold = () => {
-      const d = el.getBoundingClientRect().top - top;
-      if (Math.abs(d) < .5) return;
-      if (lenis) lenis.scrollTo(window.scrollY + d, { immediate: true, force: true });
-      else window.scrollTo(0, window.scrollY + d);
-    };
-    gsap.ticker.add(hold);
-    gsap.delayedCall(dur + .05, () => { gsap.ticker.remove(hold); refreshSoon(); });
-  };
-
-  items.forEach((it) => it.btn.addEventListener('click', () => {
-    const was = isOpen(it);
-    const above = items.some((o) => o !== it && isOpen(o) && (o.btn.compareDocumentPosition(it.btn) & Node.DOCUMENT_POSITION_FOLLOWING));
-    items.forEach((o) => o !== it && isOpen(o) && close(o));
-    was ? close(it) : open(it);
-    if (above) pin(it.btn); else gsap.delayedCall(dur + .05, refreshSoon);
+  // Each answer opens and closes on its own. Nothing above the tapped question changes height,
+  // so the page never shifts or scrolls by itself.
+  items.forEach(({ btn, panel }) => btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      panel.hidden = false;
+      gsap.fromTo(panel, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: dur, ease, overwrite: true, onComplete: () => { gsap.set(panel, { clearProps: 'height' }); refreshSoon(); } });
+    } else {
+      gsap.to(panel, { height: 0, opacity: 0, duration: dur, ease, overwrite: true, onComplete: () => { panel.hidden = true; gsap.set(panel, { clearProps: 'height,opacity' }); refreshSoon(); } });
+    }
   }));
 }
 

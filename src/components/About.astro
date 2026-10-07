@@ -1,7 +1,8 @@
 ---
 import Label from './Label.astro';
 import { Picture } from 'astro:assets';
-import tony from '../assets/tony.jpg';
+import tony from '../assets/tony-face.jpg';
+import '@fontsource/caveat/latin-600.css';
 import { site } from '../data/site';
 import { icons } from '../data/icons';
 
@@ -21,9 +22,10 @@ const journey = [
         widths={[600, 900, 1300]}
         width={1300}
         sizes="(min-width: 900px) 460px, 100vw"
-        alt="Tony, seen from behind, looking out at a pink sunset over forested hills"
+        alt="Tony taking a mirror selfie in a grey hoodie"
         loading="lazy"
       />
+      <span class="about__name" aria-hidden="true">Tony</span>
       <span class="about__badge"><i set:html={icons.pin(14)} />{site.location} · {site.timezone}</span>
     </div>
 
@@ -59,6 +61,13 @@ const journey = [
     display: inline-flex; align-items: center; gap: 7px;
     padding: 8px 14px; border-radius: var(--r-pill);
     background: var(--glass); font-size: .82rem; font-weight: 560;
+  }
+  .about__name {
+    position: absolute; left: 22px; bottom: 58px;
+    font-family: 'Caveat', cursive; font-weight: 600; font-size: clamp(2rem, 1.6rem + 1.2vw, 2.6rem); line-height: 1;
+    color: #fff; transform: rotate(-7deg); transform-origin: left bottom;
+    text-shadow: 0 2px 14px rgba(0,0,0,.35), 0 1px 2px rgba(0,0,0,.3);
+    pointer-events: none;
   }
   .about__badge i { display: inline-grid; color: var(--accent); }
 

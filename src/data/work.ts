@@ -22,7 +22,7 @@ export const longForm: Video[] = [
   },
   { id: 'Fi7qFo-3BEc', title: 'Hook & intro for Karl', meta: ['Client trial', 'Long-form intro', 'Karl'] },
   { id: 'ADEbq_VHSOA', title: 'Hook & intro for Will', meta: ['Client trial', 'Long-form intro', 'Will'] },
-  { id: 'k8ZnU9B09vs', title: 'Reusable animations in Resolve', meta: ['Own channel', 'Long-form', 'Motion graphics'] },
+  { id: 'yDPo9thJdZM', title: 'Counter animation in Resolve', meta: ['Own channel', 'Long-form', 'Motion graphics'] },
   { id: 'tJdb3OdB7I8', title: 'The gradient technique', meta: ['Own channel', 'Long-form', 'Tutorial'] },
 ];
 
