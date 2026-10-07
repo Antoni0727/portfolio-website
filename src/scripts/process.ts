@@ -44,23 +44,47 @@ function stepDrop() {
   loopWhenVisible(card, tl);
 }
 
-/* 03: updates arrive one by one, then the video is approved */
+/* 03: the cut arrives, gets watched, the client replies, then clicks Approve */
 function stepUpdates() {
   const card = $('[data-step="updates"]');
   if (!card) return;
-  const items = $$('[data-upd]', card);
-  const ok = $('[data-upd-ok]', card)!;
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: .8 });
-  tl.set(items, { opacity: 0, y: 12 })
-    .set(ok, { opacity: 0, y: 8, scale: .94 })
-    .to(items, { opacity: 1, y: 0, duration: .6, ease: 'back.out(1.6)', stagger: .7 }, .3)
-    .to(ok, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'back.out(2)' }, '+=.4')
-    .to({}, { duration: 2.4 })
-    .to([...items, ok], { opacity: 0, y: -8, duration: .45, ease: 'power2.in', stagger: .05 });
+  const msg = $('[data-rv-msg]', card)!;
+  const play = $('[data-rv-play]', card)!;
+  const react = $('[data-rv-react]', card)!;
+  const reply = $('[data-rv-reply]', card)!;
+  const dots = $('[data-rv-dots]', card)!;
+  const txt = $('[data-rv-txt]', card)!;
+  const btn = $('[data-rv-btn]', card)!;
+  const label = $('[data-rv-label]', card)!;
+  const cursor = $('[data-rv-cursor]', card)!;
+  const art = card.querySelector<HTMLElement>('.rv')!;
+  const target = () => {
+    const a = art.getBoundingClientRect(), b = btn.getBoundingClientRect();
+    return { x: b.left - a.left + b.width * .62, y: b.top - a.top + b.height * .55 };
+  };
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: .4 });
+  tl.call(() => { label.textContent = 'Approve'; btn.classList.remove('is-done'); })
+    .set(btn, { clearProps: 'backgroundColor,color,transform' })
+    .set([msg, reply, react, txt, cursor], { opacity: 0 })
+    .set(dots, { opacity: 1 })
+    .set(play, { scaleX: 0 })
+    .fromTo(msg, { y: 14, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: .7, ease: 'back.out(1.6)' }, .2)
+    .to(play, { scaleX: 1, duration: 1.8, ease: 'none' }, .8)
+    .fromTo(react, { scale: 0, rotate: -30 }, { opacity: 1, scale: 1, rotate: 0, duration: .55, ease: 'back.out(3)' }, 2.5)
+    .fromTo(reply, { scale: .6, y: 6 }, { opacity: 1, scale: 1, y: 0, duration: .5, ease: 'back.out(2)' }, 2.7)
+    .to(dots, { opacity: 0, duration: .2 }, 3.7)
+    .fromTo(txt, { y: 4 }, { opacity: 1, y: 0, duration: .45, ease: 'expo.out' }, 3.8)
+    .fromTo(cursor, { x: () => target().x + 110, y: () => target().y + 60 }, { x: () => target().x, y: () => target().y, opacity: 1, duration: 1, ease: 'expo.out' }, 4.4)
+    .to(btn, { scale: .9, duration: .12, ease: 'power2.in' })
+    .call(() => { label.textContent = 'Approved'; btn.classList.add('is-done'); })
+    .to(btn, { scale: 1, backgroundColor: '#22A565', color: '#fff', duration: .6, ease: 'back.out(3)' })
+    .to(cursor, { x: '+=50', y: '+=60', opacity: 0, duration: .8, ease: 'power2.in' }, '<.2')
+    .to({}, { duration: 2 })
+    .to([msg, reply], { opacity: 0, y: -6, duration: .45, ease: 'power2.in', stagger: .06 });
   loopWhenVisible(card, tl);
 }
 
-/* 03: the look and sound come together as the playhead passes:
+/* 02: the look and sound come together as the playhead passes:
    title snaps in, the grade lands, captions pop, music fades up, audio breathes */
 function stepPolish() {
   const card = $('[data-step="polish"]');
@@ -122,8 +146,9 @@ function stepPublish() {
 
 function staticStates() {
   $$('[data-file]').forEach((f) => (f.style.opacity = '0'));
-  $$('[data-upd-ok], [data-upd], [data-cap]').forEach((el) => (el.style.opacity = '1'));
-  $$('[data-bar], [data-progress]').forEach((b) => gsap.set(b, { scaleX: 1 }));
+  $$('[data-rv-msg], [data-rv-reply], [data-rv-txt], [data-rv-react], [data-cap]').forEach((el) => (el.style.opacity = '1'));
+  $$('[data-rv-dots]').forEach((d) => (d.style.opacity = '0'));
+  $$('[data-bar], [data-progress], [data-rv-play]').forEach((b) => gsap.set(b, { scaleX: 1 }));
   $$('[data-mark]').forEach((m) => (m.style.backgroundSize = '100% 100%'));
   $$('[data-grade]').forEach((g) => (g.style.opacity = '.95'));
   $$('[data-meter]').forEach((b, i) => gsap.set(b, { scaleY: .3 + .5 * Math.abs(Math.sin(i * .7)) }));

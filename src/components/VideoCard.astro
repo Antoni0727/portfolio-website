@@ -27,7 +27,7 @@ const src = video.thumb ?? (short ? thumb.short(video.id) : thumb.max(video.id))
   .vcard { --r-card: var(--r); }
   .vcard--short { --r-card: 18px; }
 
-  .vcard__frame { position: relative; border-radius: var(--r-card); transition: transform .9s var(--ease); }
+  .vcard__frame { position: relative; border-radius: var(--r-card); box-shadow: var(--shadow-1); transition: transform .9s var(--ease); }
   .vcard__frame::before {
     content: ""; position: absolute; inset: -1.5px; border-radius: calc(var(--r-card) + 1.5px); z-index: 0;
     background: linear-gradient(140deg, rgba(185,169,255,.95), rgba(107,75,255,.6) 40%, rgba(214,204,255,.9));
@@ -44,9 +44,10 @@ const src = video.thumb ?? (short ? thumb.short(video.id) : thumb.max(video.id))
     border-radius: var(--r-card); overflow: hidden;
     background: #0d0d10; cursor: pointer;
     transform: translateZ(0);
-    box-shadow: var(--shadow-1);
+    -webkit-mask-image: -webkit-radial-gradient(white, black); /* iOS: no square corners while animating */
   }
-  .vcard__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom, 1)); transition: transform 1.4s var(--ease); -webkit-user-drag: none; user-select: none; }
+  .vcard__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(var(--zoom, 1)); transition: transform 1.4s var(--ease), opacity .7s var(--ease); -webkit-user-drag: none; user-select: none; }
+  .js .vcard__media img:not(.is-in) { opacity: 0; }
 
   /* cursor-following purple glow (position set from JS, no lag) */
   .vglow {

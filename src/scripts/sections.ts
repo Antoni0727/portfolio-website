@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, refreshSoon, $, $$, reduceMotion } from './core';
+import { gsap, ScrollTrigger, refreshSoon, lenis, $, $$, reduceMotion } from './core';
 
 /* Chat: typing dots, then each message appears */
 export function initChat() {
@@ -57,23 +57,38 @@ export function initFaq() {
   const list = $('[data-faq]');
   if (!list) return;
   const items = $$('.qa', list).map((li) => ({ btn: $<HTMLButtonElement>('.qa__q', li)!, panel: $('.qa__a', li)! }));
+  const isOpen = (it: (typeof items)[number]) => it.btn.getAttribute('aria-expanded') === 'true';
+  const dur = reduceMotion ? 0 : .5;
+  const ease = 'power3.inOut';
 
   const close = ({ btn, panel }: (typeof items)[number]) => {
-    if (btn.getAttribute('aria-expanded') !== 'true') return;
     btn.setAttribute('aria-expanded', 'false');
-    gsap.to(panel, { height: 0, opacity: 0, duration: reduceMotion ? 0 : .5, ease: 'power3.inOut', overwrite: true, onComplete: () => { panel.hidden = true; gsap.set(panel, { clearProps: 'height,opacity' }); refreshSoon(); } });
+    gsap.to(panel, { height: 0, opacity: 0, duration: dur, ease, overwrite: true, onComplete: () => { panel.hidden = true; gsap.set(panel, { clearProps: 'height,opacity' }); } });
   };
   const open = ({ btn, panel }: (typeof items)[number]) => {
     btn.setAttribute('aria-expanded', 'true');
     panel.hidden = false;
-    gsap.fromTo(panel, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: reduceMotion ? 0 : .6, ease: 'power3.out', overwrite: true, onComplete: () => { gsap.set(panel, { clearProps: 'height' }); refreshSoon(); } });
-    gsap.fromTo(panel.querySelector('p'), { y: 14 }, { y: 0, duration: 1, ease: 'expo.out', delay: .15 });
+    gsap.fromTo(panel, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: dur, ease, overwrite: true, onComplete: () => { gsap.set(panel, { clearProps: 'height' }); } });
+  };
+  // when an answer above collapses, keep the tapped question still on screen instead of letting it jump up
+  const pin = (el: HTMLElement) => {
+    const top = el.getBoundingClientRect().top;
+    const hold = () => {
+      const d = el.getBoundingClientRect().top - top;
+      if (Math.abs(d) < .5) return;
+      if (lenis) lenis.scrollTo(window.scrollY + d, { immediate: true, force: true });
+      else window.scrollTo(0, window.scrollY + d);
+    };
+    gsap.ticker.add(hold);
+    gsap.delayedCall(dur + .05, () => { gsap.ticker.remove(hold); refreshSoon(); });
   };
 
   items.forEach((it) => it.btn.addEventListener('click', () => {
-    const isOpen = it.btn.getAttribute('aria-expanded') === 'true';
-    items.forEach((o) => o !== it && close(o));
-    isOpen ? close(it) : open(it);
+    const was = isOpen(it);
+    const above = items.some((o) => o !== it && isOpen(o) && (o.btn.compareDocumentPosition(it.btn) & Node.DOCUMENT_POSITION_FOLLOWING));
+    items.forEach((o) => o !== it && isOpen(o) && close(o));
+    was ? close(it) : open(it);
+    if (above) pin(it.btn); else gsap.delayedCall(dur + .05, refreshSoon);
   }));
 }
 
@@ -114,9 +129,12 @@ export function initCopy() {
 export function initWhyTable() {
   const table = $('[data-vs]');
   if (!table) return;
+  const panels = $$('[data-vs-panel]', table);
+  const heads = $$('[data-vs-head]', table);
   const them = $$('[data-vs-them]', table);
   const links = $$('[data-vs-link] i', table);
   const me = $$('[data-vs-me]', table);
+  const shine = $('[data-vs-shine]', table);
   // hovering any part of a row lights up both answers of that row
   if (matchMedia('(hover: hover)').matches) {
     const rows = them.map((t, i) => [t, links[i].parentElement!, me[i]]);
@@ -125,14 +143,23 @@ export function initWhyTable() {
       el.addEventListener('pointerleave', () => row.forEach((r) => r.classList.remove('is-hot')));
     }));
   }
-  if (reduceMotion) { gsap.set([...them, ...me], { opacity: 1 }); gsap.set(links, { scaleX: 1 }); return; }
-  const tl = gsap.timeline({ paused: true });
+  if (reduceMotion) { gsap.set([...panels, ...heads, ...them, ...me], { opacity: 1 }); gsap.set(links, { scaleX: 1 }); return; }
+
+  // panels rise in, titles settle, then each row reads left to right; one soft light sweep at the end
+  const ease = 'power3.out';
+  const tl = gsap.timeline({ paused: true, defaults: { ease } });
+  tl.fromTo(panels[0], { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 1.1 }, 0)
+    .fromTo(panels[1], { opacity: 0, y: 46, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: 1.3 }, .12)
+    .fromTo(heads, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .9, stagger: .12 }, .35);
   them.forEach((t, i) => {
-    const at = i * .14;
-    tl.fromTo(t, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: .7, ease: 'expo.out' }, at)
-      .fromTo(links[i], { scaleX: 0 }, { scaleX: 1, duration: .55, ease: 'power3.inOut' }, at + .15)
-      .fromTo(me[i], { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: .7, ease: 'expo.out' }, at + .45)
-      .fromTo(me[i].querySelector('.vs__check'), { scale: 0 }, { scale: 1, duration: .5, ease: 'back.out(2.4)' }, at + .5);
+    const at = .6 + i * .11;
+    tl.fromTo(t, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .9 }, at)
+      .fromTo(links[i], { scaleX: 0 }, { scaleX: 1, duration: .7, ease: 'power2.inOut' }, at + .12)
+      .fromTo(me[i], { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .9 }, at + .3)
+      .fromTo(me[i].querySelector('.vs__check'), { scale: .4 }, { scale: 1, duration: .7, ease: 'back.out(2)' }, at + .34);
   });
-  ScrollTrigger.create({ trigger: table, start: 'top 75%', once: true, onEnter: () => tl.play() });
+  if (shine) tl.fromTo(shine, { xPercent: 0, opacity: 1 }, { xPercent: 290, duration: 1.6, ease: 'power2.inOut' }, '-=.5').set(shine, { opacity: 0 });
+  // clear transforms when done so hover glows sit on a clean layer
+  tl.add(() => gsap.set([...panels, ...heads, ...them, ...me], { clearProps: 'transform' }));
+  ScrollTrigger.create({ trigger: table, start: 'top 78%', once: true, onEnter: () => tl.play() });
 }

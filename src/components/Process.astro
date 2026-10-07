@@ -6,9 +6,12 @@ import { longForm, thumb } from '../data/work';
 import resolveLogo from '../assets/logos/resolve.png';
 import affinityLogo from '../assets/logos/affinity.svg';
 import epidemicLogo from '../assets/logos/epidemic.svg';
+import tony from '../assets/tony.jpg';
 
 const pub = longForm[0];
 const pubThumb = pub.thumb ?? thumb.mid(pub.id);
+const cut = longForm[1];
+const cutThumb = cut.thumb ?? thumb.mid(cut.id);
 ---
 <section class="section" id="process" aria-labelledby="process-title">
   <div class="container">
@@ -74,13 +77,28 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
       <!-- 03 -->
       <li class="step" data-reveal data-step="updates">
         <div class="step__art" aria-hidden="true">
-          <div class="upd">
-            <ul class="upd__list">
-              <li class="upd__item" data-upd><i class="upd__dot"></i><span>Footage received</span><span class="upd__time">Mon</span></li>
-              <li class="upd__item" data-upd><i class="upd__dot"></i><span>First cut is ready</span><span class="upd__time">Tue</span></li>
-              <li class="upd__item" data-upd><i class="upd__dot"></i><span>Final edit uploaded</span><span class="upd__time">Wed</span></li>
-            </ul>
-            <span class="upd__ok" data-upd-ok><i set:html={icons.check(10)} />Approved</span>
+          <div class="rv">
+            <div class="rv__win">
+              <div class="rv__msg" data-rv-msg>
+                <Image src={tony} alt="" width={48} height={48} class="rv__avatar" />
+                <div class="rv__bubble">
+                  <p>First cut is ready, have a look</p>
+                  <span class="rv__file">
+                    <span class="rv__thumb"><img src={cutThumb} alt="" width="320" height="180" loading="lazy" draggable="false" /><i set:html={icons.play(9)} /></span>
+                    <span class="rv__meta"><b>first-cut.mp4</b><span class="rv__track"><i data-rv-play></i></span></span>
+                  </span>
+                  <span class="rv__react" data-rv-react><svg viewBox="0 0 24 24" width="11" height="11"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3.1 4.5 6.9 4.5c2.1 0 3.6 1.1 5.1 3 1.5-1.9 3-3 5.1-3 3.8 0 6 3.9 4.5 7.3C19.5 16.4 12 21 12 21z" fill="currentColor"/></svg></span>
+                </div>
+              </div>
+              <div class="rv__reply" data-rv-reply>
+                <span class="rv__dots" data-rv-dots><i></i><i></i><i></i></span>
+                <span class="rv__txt" data-rv-txt>This looks amazing!</span>
+              </div>
+              <div class="rv__foot">
+                <span class="rv__btn" data-rv-btn><i set:html={icons.check(11)} /><span data-rv-label>Approve</span></span>
+              </div>
+            </div>
+            <span class="rv__cursor" data-rv-cursor><svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 3l14 8-6 1.6L10 19z" fill="#121116" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
           </div>
         </div>
         <span class="step__num num">03</span>
@@ -168,24 +186,52 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
   .drop__bar { height: 6px; border-radius: 6px; background: rgba(107,75,255,.16); overflow: hidden; }
   .drop__bar i { display: block; height: 100%; border-radius: inherit; background: var(--accent); transform-origin: left; transform: scaleX(0); }
 
-  /* 03 updates */
-  .upd { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 22px; }
-  .upd__list { width: 100%; max-width: 330px; display: flex; flex-direction: column; gap: 8px; }
-  .upd__item {
-    display: grid; grid-template-columns: 18px 1fr auto; align-items: center; gap: 10px;
-    padding: 10px 14px; border-radius: 12px;
-    background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 16px -10px rgba(18,17,22,.25);
-    font-size: .8rem; font-weight: 560; color: var(--ink-2);
+  /* 03 review & approval */
+  .rv { position: absolute; inset: 0; display: grid; place-items: center; }
+  .rv__win {
+    width: min(88%, 340px); display: flex; flex-direction: column; gap: 9px; padding: 12px;
+    border-radius: 18px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-2);
+    transition: transform .8s var(--ease);
   }
-  .upd__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-50); justify-self: center; }
-  .upd__time { font-size: .7rem; font-weight: 500; color: var(--ink-3); }
-  .upd__ok {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 13px 6px 7px; border-radius: var(--r-pill);
-    background: var(--surface); border: 1px solid var(--line); box-shadow: 0 8px 18px -10px rgba(18,17,22,.3);
-    font-size: .78rem; font-weight: 650; color: var(--ok); opacity: 0;
+  .rv__msg { display: flex; align-items: flex-end; gap: 8px; }
+  .rv__msg :global(.rv__avatar) { flex: none; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+  .rv__bubble { position: relative; display: flex; flex-direction: column; gap: 7px; padding: 8px 9px 9px; border-radius: 14px 14px 14px 4px; background: var(--bg-2); }
+  .rv__bubble p { font-size: .74rem; font-weight: 560; color: var(--ink-2); line-height: 1.25; padding-left: 2px; }
+  .rv__file { display: grid; grid-template-columns: 74px 1fr; gap: 9px; align-items: center; padding: 5px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+  .rv__thumb { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; }
+  .rv__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .rv__thumb i { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; background: rgba(18,17,22,.6); color: #fff; transition: transform .6s var(--ease); }
+  .rv__meta { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-right: 4px; }
+  .rv__meta b { font-size: .7rem; font-weight: 620; }
+  .rv__track { height: 4px; border-radius: 4px; background: var(--bg-2); overflow: hidden; }
+  .rv__track i { display: block; height: 100%; border-radius: inherit; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+  .rv__react {
+    position: absolute; right: -8px; bottom: -8px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--line); color: #FF4D6D; box-shadow: 0 4px 10px -4px rgba(18,17,22,.35); opacity: 0;
   }
-  .upd__ok i { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--ok); color: #fff; }
+  .rv__reply {
+    align-self: flex-end; display: grid; place-items: center; min-height: 28px; padding: 6px 12px;
+    border-radius: 14px 14px 4px 14px; background: var(--accent); color: #fff;
+    font-size: .74rem; font-weight: 600; transform-origin: right bottom; opacity: 0;
+  }
+  .rv__reply > * { grid-area: 1 / 1; }
+  .rv__dots { display: flex; gap: 3px; }
+  .rv__dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.85); animation: rvdot 1s ease-in-out infinite; animation-play-state: paused; }
+  .rv__dots i:nth-child(2) { animation-delay: .15s; } .rv__dots i:nth-child(3) { animation-delay: .3s; }
+  [data-step].is-live .rv__dots i { animation-play-state: running; }
+  @keyframes rvdot { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-3px); opacity: 1; } }
+  .rv__txt { opacity: 0; white-space: nowrap; }
+  .rv__foot { display: flex; justify-content: center; padding-top: 3px; border-top: 1px solid var(--line); }
+  .rv__btn {
+    position: relative; display: inline-flex; align-items: center; gap: 6px; margin-top: 7px;
+    padding: 6px 15px 6px 11px; border-radius: var(--r-pill);
+    background: var(--bg-2); color: var(--ink-2); font-size: .74rem; font-weight: 650;
+  }
+  .rv__btn i { display: inline-grid; }
+  .rv__btn::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 2px solid var(--ok); opacity: 0; transform: scale(1); }
+  .rv__btn.is-done::after { animation: rvring .8s var(--ease) both; }
+  @keyframes rvring { from { opacity: .7; transform: scale(1); } to { opacity: 0; transform: scale(1.5); } }
+  .rv__cursor { position: absolute; left: 0; top: 0; z-index: 3; opacity: 0; }
 
   /* 03 polish: one centered group (editor + tool icons) */
   .polish { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 0 22px; }
@@ -232,12 +278,12 @@ const pubThumb = pub.thumb ?? thumb.mid(pub.id);
     .step:hover .tool:nth-child(3) { transform: translateY(-9px) rotate(2deg); transition-delay: .1s; }
     .step:hover .tool:nth-child(4) { transform: translateY(-6px) rotate(6deg); transition-delay: .15s; }
     .step:hover .drop__folder { transform: translateX(-50%) translateY(-6px) rotate(-1.5deg); }
-    .step:hover .upd__item:nth-child(odd) { transform: translateX(-4px); }
-    .step:hover .upd__item:nth-child(even) { transform: translateX(4px); }
+    .step:hover .rv__win { transform: translateY(-6px) rotate(-.6deg); }
+    .step:hover .rv__thumb i { transform: scale(1.18); }
     .step:hover .up__win { transform: translateY(-6px) scale(1.02); }
     .step:hover .polish__ui { transform: translateY(-3px); }
   }
-  .drop__folder, .up__win, .upd__item { transition: transform .8s var(--ease); }
+  .drop__folder, .up__win { transition: transform .8s var(--ease); }
 
   /* 04 upload dialog */
   .up { position: absolute; inset: 0; display: grid; place-items: center; }

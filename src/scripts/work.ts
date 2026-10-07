@@ -2,6 +2,12 @@ import { gsap, ScrollTrigger, refreshSoon, $, $$, reduceMotion } from './core';
 import { playInline, stopInline } from './player';
 
 export function initWork() {
+  // thumbnails fade in once decoded instead of popping in mid-reveal
+  document.querySelectorAll<HTMLImageElement>('.vcard__media img').forEach((img) => {
+    const show = () => img.classList.add('is-in');
+    if (img.complete && img.naturalWidth) show();
+    else { img.addEventListener('load', () => (img.decode ? img.decode().catch(() => {}).then(show) : show()), { once: true }); img.addEventListener('error', show, { once: true }); }
+  });
   initTabs();
   $$('[data-more]').forEach(initMore);
   initCards();

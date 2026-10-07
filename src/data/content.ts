@@ -9,7 +9,7 @@ export const proof = [
 
 /* "Why me" comparison. Keep each side short (3–5 words, no full stop). */
 export const comparison = [
-  { them: 'Chaotic effects everywhere', me: 'Every effect intentional' },
+  { them: 'Chaotic effects everywhere', me: 'Every visual intentional' },
   { them: 'Editing to impress editors', me: 'Editing for your viewers' },
   { them: 'Only cares how it looks', me: 'Story, emotion and feel' },
   { them: 'No creator experience', me: 'Creator mindset, own channel' },
@@ -22,9 +22,9 @@ export const comparison = [
 export const chat = {
   title: 'Clients',
   messages: [
-    { name: 'Joseph', role: 'Scriptwriter & producer', initial: 'J', tone: 'violet', quote: 'Video was super fire! 🔥' },
-    { name: 'Joseph', role: 'Scriptwriter & producer', initial: 'J', tone: 'violet', quote: 'Looking forward to working with you again soon brotha 🫡' },
-    { name: 'Ava', role: 'Instagram creator', initial: 'A', tone: 'rose', quote: 'I’m happy to move forward w more work this looks great and appreciate the quick turn around' },
+    { name: 'Joseph Curtois', role: 'Agency owner', initial: 'J', tone: 'violet', quote: 'Video was super fire! 🔥' },
+    { name: 'Joseph Curtois', role: 'Agency owner', initial: 'J', tone: 'violet', quote: 'Looking forward to working with you again soon brotha 🫡' },
+    { name: 'Ava Mistruzzi', role: 'Sales Coach', initial: 'A', tone: 'rose', quote: 'I’m happy to move forward w more work this looks great and appreciate the quick turn around' },
   ],
   reply: "Thanks for the kind words, it's a pleasure working with you all. On to the next one!",
 };
