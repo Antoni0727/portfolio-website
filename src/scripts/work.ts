@@ -102,11 +102,14 @@ function initMore(btn: HTMLElement) {
     const d = reduceMotion ? 0 : 1;
     tl = gsap.timeline({ onComplete: () => refreshSoon() });
     if (open) {
-      tl.to(wrap, { height: 'auto', duration: 1.1 * d, ease: 'expo.inOut' })
+      // once fully open, stop clipping so the hover outline, lift and shadow aren't cut off
+      tl.set(wrap, { overflow: 'hidden' })
+        .to(wrap, { height: 'auto', duration: 1.1 * d, ease: 'expo.inOut', onComplete: () => gsap.set(wrap, { overflow: 'visible' }) })
         .fromTo(cards, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1 * d, stagger: .06, ease: 'expo.out', clearProps: 'transform' }, .2 * d);
     } else {
       stopInline();
-      tl.to(cards, { opacity: 0, y: 16, duration: .3 * d, stagger: .02, ease: 'power2.in' })
+      tl.set(wrap, { overflow: 'hidden' })
+        .to(cards, { opacity: 0, y: 16, duration: .3 * d, stagger: .02, ease: 'power2.in' })
         .to(wrap, { height: 0, duration: .9 * d, ease: 'expo.inOut' }, .1 * d);
     }
   });
