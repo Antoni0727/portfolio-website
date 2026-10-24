@@ -1,0 +1,3 @@
+# Plugins link used inside the TJ plugins. Gumroad for now; becomes the store page when it moves onto tonyjedits.com.
+/plugins   https://tonyjedits.gumroad.com/   302
+/plugins/  https://tonyjedits.gumroad.com/   302
