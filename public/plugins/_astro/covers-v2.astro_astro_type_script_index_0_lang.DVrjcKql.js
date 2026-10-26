@@ -1,0 +1,1 @@
+var e=new URLSearchParams(location.search).get(`id`);e&&(document.documentElement.classList.add(`solo`),document.querySelector(`[data-id="${CSS.escape(e)}"]`)?.classList.add(`is-solo`),document.querySelectorAll(`.pc`).forEach(e=>e.classList.add(`is-still`)));

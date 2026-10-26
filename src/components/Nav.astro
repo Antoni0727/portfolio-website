@@ -14,6 +14,7 @@ const links = [
     <nav aria-label="Primary">
       <ul class="nav__links">
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="/plugins/" class="nav__out">Plugins <span aria-hidden="true">↗</span></a></li>
       </ul>
     </nav>
     <div class="nav__actions">
@@ -31,6 +32,7 @@ const links = [
     <div class="nav__sheet" id="nav-sheet" data-sheet>
       <ul>
         {links.map((l) => <li><a href={l.href} data-sheet-link>{l.label}</a></li>)}
+        <li><a href="/plugins/" data-sheet-link class="nav__sheet-out">Plugins</a></li>
       </ul>
     </div>
   </div>
@@ -78,6 +80,10 @@ const links = [
   }
   @media (hover: hover) { .nav__links a:hover { color: var(--ink); background: var(--hover); } }
   .nav__links a.is-active { color: var(--accent-700); background: var(--accent-50); }
+  /* the plugin store (tonyjedits.com/plugins): a separate site, so it's quieter, like Portfolio ↗ there */
+  .nav__out { color: var(--ink-3) !important; }
+  @media (max-width: 960px) and (min-width: 761px) { .nav__links a { padding: 9px 11px; } .nav__out { display: none !important; } }
+  .nav__sheet-out { color: var(--ink-3); }
 
   .nav__actions { display: flex; align-items: center; gap: 6px; }
   .theme-toggle {

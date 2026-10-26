@@ -3,3 +3,4 @@ Allow: /
 Disallow: /dev/
 
 Sitemap: https://tonyjedits.com/sitemap-index.xml
+Sitemap: https://tonyjedits.com/plugins/sitemap.xml

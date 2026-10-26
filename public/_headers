@@ -1,13 +1,17 @@
 # Netlify security headers. Applies to every page.
 # If you add an outside service (booking widget, analytics), allowlist it in the CSP.
-# The sha256 below allows the one tiny inline script in Base.astro. If you edit that script, update the hash.
+# It also covers the plugin store at /plugins (copied in from tonyjedits-plugins): Gumroad's checkout overlay is allowed.
+# The two sha256 hashes allow the tiny inline scripts in Base.astro (portfolio, then the plugin store's). If you edit either script, update its hash.
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-5Oe45UC2O28JooXbx1XCjEp2FK/q7Kb4X6M4NJ8nspo='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://i.ytimg.com data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-5Oe45UC2O28JooXbx1XCjEp2FK/q7Kb4X6M4NJ8nspo=' 'sha256-9dkE4N98OTDREZHYkBZQ+YPLvR9fUE0tYAYZTRp6Qcc=' https://gumroad.com https://assets.gumroad.com; style-src 'self' 'unsafe-inline' https://assets.gumroad.com; font-src 'self' https://assets.gumroad.com; img-src 'self' https://i.ytimg.com https://assets.gumroad.com data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://gumroad.com https://*.gumroad.com; connect-src 'self' https://gumroad.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
 
 /_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/plugins/_astro/*
   Cache-Control: public, max-age=31536000, immutable

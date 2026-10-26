@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The dark glass tile with the chrome mark, as on the paid plugins' Effects-library thumbnails. -->
+  <defs>
+    <linearGradient id="t" x1=".2" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#2D2358"/><stop offset=".55" stop-color="#151026"/><stop offset="1" stop-color="#0A0813"/></linearGradient>
+    <linearGradient id="c" x1=".15" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#E4DCFF"/><stop offset="1" stop-color="#8A6EFF"/></linearGradient>
+    <linearGradient id="r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".35" stop-color="#B9A9FF" stop-opacity=".22"/><stop offset="1" stop-color="#8A6EFF" stop-opacity=".4"/></linearGradient>
+    <radialGradient id="g" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#7A5CFF" stop-opacity=".55"/><stop offset="1" stop-color="#7A5CFF" stop-opacity="0"/></radialGradient>
+    <filter id="b" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.4"/></filter>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#t)"/>
+  <circle cx="32" cy="34" r="24" fill="url(#g)"/>
+  <rect x="2.6" y="2.6" width="58.8" height="58.8" rx="14.4" fill="none" stroke="url(#r)" stroke-width="1.2"/>
+  <g transform="translate(-1 1)">
+    <g filter="url(#b)" opacity=".7">
+      <path d="M27.5 10.5 H48.5 a2.5 2.5 0 0 1 2.5 2.5 V15.6 a2.5 2.5 0 0 1 -.95 1.96 L40.5 25.1 a4 4 0 0 1 -5 0 L25.95 17.56 a2.5 2.5 0 0 1 -.95 -1.96 V13 a2.5 2.5 0 0 1 2.5 -2.5 Z" fill="#8A6EFF"/>
+      <path d="M38 24 V39 a11 11 0 0 1 -11 11 a9.5 9.5 0 0 1 -8.6 -5.5" stroke="#8A6EFF" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+    </g>
+    <path d="M27.5 10.5 H48.5 a2.5 2.5 0 0 1 2.5 2.5 V15.6 a2.5 2.5 0 0 1 -.95 1.96 L40.5 25.1 a4 4 0 0 1 -5 0 L25.95 17.56 a2.5 2.5 0 0 1 -.95 -1.96 V13 a2.5 2.5 0 0 1 2.5 -2.5 Z" fill="url(#c)"/>
+    <path d="M38 24 V39 a11 11 0 0 1 -11 11 a9.5 9.5 0 0 1 -8.6 -5.5" stroke="url(#c)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

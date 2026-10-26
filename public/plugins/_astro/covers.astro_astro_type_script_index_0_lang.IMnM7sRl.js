@@ -1,0 +1,1 @@
+var e=new URLSearchParams(location.search).get(`id`);e&&(document.documentElement.classList.add(`covers-solo`),document.querySelector(`[data-id="${CSS.escape(e)}"]`)?.classList.add(`is-solo`));
