@@ -1,0 +1,1 @@
+for(let e of document.querySelectorAll(`.fxrow`)){let t=e.querySelector(`.cover`);t&&(e.addEventListener(`pointerenter`,()=>t.classList.add(`is-play`)),e.addEventListener(`pointerleave`,()=>t.classList.remove(`is-play`)))}

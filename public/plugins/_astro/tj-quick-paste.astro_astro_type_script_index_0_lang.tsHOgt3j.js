@@ -1,0 +1,1 @@
+document.querySelectorAll(`[data-yt]`).forEach(e=>e.addEventListener(`click`,()=>{let t=document.createElement(`iframe`);t.src=`https://www.youtube-nocookie.com/embed/${e.dataset.yt}?rel=0&autoplay=1`,t.title=`TJ Quick Paste demo`,t.allow=`autoplay; encrypted-media; picture-in-picture; fullscreen`,t.allowFullscreen=!0,e.replaceWith(t)},{once:!0}));
