@@ -28,7 +28,8 @@ const json = (data, status = 200) => new Response(JSON.stringify(data), {
 });
 
 export default async (req) => {
-  const store = getStore(STORE);
+  // strong: the results page sees a vote (or a taken-back one) at once, not up to a minute later
+  const store = getStore({ name: STORE, consistency: 'strong' });
 
   if (req.method === 'POST') {
     // only from this site's own pages

@@ -5,7 +5,7 @@
   try { v = localStorage.getItem('tjLayout'); } catch (e) {}
   if (list.indexOf(v) < 0) {
     v = list[Math.floor(Math.random() * list.length)];
-    try { localStorage.setItem('tjLayout', v); localStorage.setItem('tjLayoutFirst', v); } catch (e) {}
+    try { localStorage.setItem('tjLayout', v); } catch (e) {}
   }
   if (!v) return;
   document.documentElement.style.visibility = 'hidden';
