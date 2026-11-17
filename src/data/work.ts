@@ -21,20 +21,20 @@ export const longForm: Video[] = [
     thumb: 'https://i.ytimg.com/vi/fMaZWbqDzgA/hqdefault.jpg',
   },
   { id: 'Fi7qFo-3BEc', title: 'Hook & intro for Karl', meta: ['Client trial', 'Long-form intro', 'Karl'] },
-  { id: 'ADEbq_VHSOA', title: 'Hook & intro for Will', meta: ['Client trial', 'Long-form intro', 'Will'] },
+  { id: 'xNabwJoohnw', title: '$100K vs $100M salary', meta: ['Client edit', 'Long-form', 'Jacob Warwick'] },
   { id: 'yDPo9thJdZM', title: 'Counter animation in Resolve', meta: ['Own channel', 'Long-form', 'Motion graphics'] },
   { id: 'tJdb3OdB7I8', title: 'The gradient technique', meta: ['Own channel', 'Long-form', 'Tutorial'] },
 ];
 
 export const shorts: Video[] = [
   { id: 'R3Y97u4cIFI', title: 'Why your videos get skipped', meta: ['Own channel', 'Editing tip'] },
-  { id: 'DQnblDu2lco', title: 'Making more makes you better', meta: ['Talking head', 'Captions & motion'] },
-  { id: 'RIP9H5I7CuQ', title: 'Exploring the Netherlands', meta: ['Cinematic travel', 'Color & sound'] },
+  { id: '7O9a-4QLVyg', title: 'From debt to a real business', meta: ['Client ad', 'Animated text'] },
+  { id: 'r08WC_gkQUU', title: 'The issue with most side hustles', meta: ['Client ad', 'Captions & motion'] },
   { id: 'jXmTX4UbPUk', title: 'Giving up is easy', meta: ['Motivational', 'Pacing & sound'] },
-  { id: '2ijFjMWI7xs', title: 'Your story deserves better edits', meta: ['3D motion', 'Practice piece'] },
-  { id: 'BzrUYwcQYhU', title: 'What are humans meant to do?', meta: ['Podcast clip', 'Captions'] },
+  { id: 'RIP9H5I7CuQ', title: 'Exploring the Netherlands', meta: ['Cinematic travel', 'Color & sound'] },
+  { id: '6IWdVfP_Ty4', title: 'What the most successful players do', meta: ['Client ad', 'Whiteboard & typography'] },
   { id: 'YDrPMBdFfzQ', title: 'Wanting everything, doing nothing', meta: ['Aesthetic edit', 'Typography'] },
-  { id: 'e3oymWJMuyY', title: 'The version that makes it', meta: ['Motion design', 'Motivational'] },
+  { id: 'DQnblDu2lco', title: 'Making more makes you better', meta: ['Talking head', 'Captions & motion'] },
 ];
 
 /** How many videos show before "Show more" */
