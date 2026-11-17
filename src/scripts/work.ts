@@ -130,7 +130,7 @@ function initCards() {
           { x: 0, y: 0, scale: Math.max(r.width, r.height) / 55, opacity: 0, duration: 2.2, ease: 'power2.out', overwrite: true });
       });
     }
-    const play = () => { if (!media.classList.contains('is-playing')) playInline(media, id, title); };
+    const play = () => { if (!media.classList.contains('is-playing')) playInline(media, id, title, undefined, Number(media.dataset.from) || 0); };
     media.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).closest('[data-stop]')) { e.stopPropagation(); stopInline(); return; }
       play();

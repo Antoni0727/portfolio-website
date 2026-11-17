@@ -155,7 +155,7 @@ const sfx = [0.07, 0.24, 0.43, 0.61, 0.79, 0.9];
         </div>
       </div>
 
-      <script type="application/json" data-ed-clips set:html={JSON.stringify(clips.map(({ id, title, meta, start, end }) => ({ id, title, meta: meta.join(' · '), start, end })))} />
+      <script type="application/json" data-ed-clips set:html={JSON.stringify(clips.map(({ id, title, meta, start, end, from }) => ({ id, title, meta: meta.join(' · '), start, end, from })))} />
     </div>
     <p class="hero__hint" data-hero-item>Drag the playhead, pick a clip or press play</p>
   </div>

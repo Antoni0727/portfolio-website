@@ -9,7 +9,7 @@ const src = video.thumb ?? (short ? thumb.short(video.id) : thumb.max(video.id))
 ---
 <article class:list={['vcard', short && 'vcard--short']}>
   <div class="vcard__frame">
-    <div class="vcard__media" data-video={video.id} data-glow role="button" tabindex="0" aria-label={`Play: ${video.title}`}>
+    <div class="vcard__media" data-video={video.id} data-from={video.from} data-glow role="button" tabindex="0" aria-label={`Play: ${video.title}`}>
       <img src={src} alt="" width={short ? 405 : 1280} height="720" loading="lazy" decoding="async" draggable="false" style={video.zoom ? `--zoom:${video.zoom}` : undefined} />
       <span class="vglow" aria-hidden="true"></span>
       <span class="vcard__ring" aria-hidden="true" data-ring></span>
@@ -20,6 +20,7 @@ const src = video.thumb ?? (short ? thumb.short(video.id) : thumb.max(video.id))
   <div class="vcard__body">
     <p class="vcard__meta">{video.meta.join(' · ')}</p>
     <h3 class="vcard__title">{video.title}</h3>
+    {video.note && <p class="vcard__note">{video.note}</p>}
   </div>
 </article>
 
@@ -105,6 +106,7 @@ const src = video.thumb ?? (short ? thumb.short(video.id) : thumb.max(video.id))
   .vcard__meta { font-size: var(--fs-small); color: var(--ink-3); transition: transform .8s var(--ease); }
   .vcard__title { margin-top: 4px; font-size: 1.2rem; font-weight: 620; letter-spacing: -0.022em; line-height: 1.3; transition: color .6s var(--ease), transform .8s var(--ease); }
 
+  .vcard__note { margin-top: 6px; font-size: .8rem; line-height: 1.45; color: var(--ink-3); }
   .vcard--short .vcard__media { aspect-ratio: 9 / 16; }
   .vcard--short .vcard__body { padding-top: 14px; }
   .vcard--short .vcard__meta { font-size: .8rem; }

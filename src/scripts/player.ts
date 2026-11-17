@@ -4,13 +4,13 @@
 type Playing = { host: HTMLElement; frame: HTMLIFrameElement; onStop?: () => void };
 let current: Playing | null = null;
 
-export function playInline(host: HTMLElement, id: string, title = 'Video', onStop?: () => void) {
+export function playInline(host: HTMLElement, id: string, title = 'Video', onStop?: () => void, from = 0) {
   stopInline();
   const frame = document.createElement('iframe');
   frame.className = 'yt-frame';
   // phones block autoplay with sound inside embeds; muted autoplay starts instantly (tap the video to unmute)
   const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-  frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1&modestbranding=1${touch ? '&mute=1' : ''}`;
+  frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1&modestbranding=1${from ? `&start=${Math.floor(from)}` : ''}${touch ? '&mute=1' : ''}`;
   frame.title = title;
   frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
   frame.allowFullscreen = true;

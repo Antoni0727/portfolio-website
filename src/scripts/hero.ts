@@ -2,7 +2,7 @@ import { gsap, ScrollTrigger, $, $$, reduceMotion, finePointer, isLite, isTouch 
 import { revealHeading } from './reveal';
 import { playInline, stopInline } from './player';
 
-type Clip = { id: string; title: string; meta: string; start: number; end: number };
+type Clip = { id: string; title: string; meta: string; start: number; end: number; from?: number };
 
 export function initHero() {
   const hero = $('.hero');
@@ -147,7 +147,7 @@ function initEditor(editor: HTMLElement) {
       playBtn.classList.remove('is-playing');
       playBtn.setAttribute('aria-label', `Play ${clips[active].title}`);
       resumeAutoLater();
-    });
+    }, c.from);
   };
 
   /* jump to a clip; if a video is playing, keep playing the new one */

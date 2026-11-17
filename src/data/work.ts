@@ -10,6 +10,10 @@ export type Video = {
   thumb?: string;
   /** Optional zoom (e.g. 1.03) to crop thin black bars baked into a thumbnail */
   zoom?: number;
+  /** Optional second to start playback at (skips parts that aren't my edit) */
+  from?: number;
+  /** Optional small note under the title */
+  note?: string;
 };
 
 export const longForm: Video[] = [
@@ -20,10 +24,10 @@ export const longForm: Video[] = [
     meta: ['Client edit', 'Long-form', 'Wayne Kitula'],
     thumb: 'https://i.ytimg.com/vi/fMaZWbqDzgA/hqdefault.jpg',
   },
-  { id: 'Fi7qFo-3BEc', title: 'Hook & intro for Karl', meta: ['Client trial', 'Long-form intro', 'Karl'] },
-  { id: 'xNabwJoohnw', title: '$100K vs $100M salary', meta: ['Client edit', 'Long-form', 'Jacob Warwick'] },
+  { id: 'ksskWgy-yxg', title: 'VSL edit', meta: ['Client edit', 'VSL', 'Sales video'] },
+  { id: 'xNabwJoohnw', title: '$100K vs $100M salary', meta: ['Client edit', 'Long-form', 'Jacob Warwick'], from: 36, note: 'Plays from 0:36. The intro before it wasn’t edited by me.' },
   { id: 'yDPo9thJdZM', title: 'Counter animation in Resolve', meta: ['Own channel', 'Long-form', 'Motion graphics'] },
-  { id: 'tJdb3OdB7I8', title: 'The gradient technique', meta: ['Own channel', 'Long-form', 'Tutorial'] },
+  { id: 'Fi7qFo-3BEc', title: 'Hook & intro for Karl', meta: ['Client trial', 'Long-form intro', 'Karl'] },
 ];
 
 export const shorts: Video[] = [
