@@ -2,7 +2,7 @@
    Lives here with the store's code; `npm run to-portfolio` copies it into the portfolio's netlify/functions/,
    because the portfolio repo is what Netlify deploys. Storage: Netlify Blobs (built into the site, nothing to set up).
 
-   POST /plugins/api/vote   layout=a..e|none, first=a..e, voter=random code   (sent by the vote button)
+   POST /plugins/api/vote   layout=a..f|none, first=a..f, voter=random code   (sent by the vote button)
      One entry per voter: key "<layout>/<first>/<voter>". A changed vote replaces the old one, "none" removes it.
      Nothing personal is stored: no IP, no name, no email. Netlify's rate limit (per IP, not saved) stops floods.
    GET  /plugins/api/vote?key=...                                           (read by /plugins/votes/)
@@ -13,7 +13,7 @@ import { getStore } from '@netlify/blobs';
 
 const STORE = 'layout-votes';
 const KEY_SHA256 = '7e403a5795580b42bede28b41b2263995aab64a116900a0d41649fe7af518e69';
-const LAYOUTS = ['a', 'b', 'c', 'd', 'e'];
+const LAYOUTS = ['a', 'b', 'c', 'd', 'e', 'f'];   // e = Unfold (retired), f = Paste
 
 export const config = {
   path: '/plugins/api/vote',
