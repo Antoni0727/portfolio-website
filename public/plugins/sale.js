@@ -9,7 +9,7 @@
     d.classList.remove('has-sbar');
     d.classList.add('sale-over');
     if (!now || !later) return;
-    // every "$19" on the page becomes "$25" (text and labels)
+    // every offer price on the page ("$29") becomes the later one ("$39") (text and labels)
     var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), t;
     while ((t = w.nextNode())) if (t.nodeValue.indexOf(now) > -1) t.nodeValue = t.nodeValue.split(now).join(later);
     var a = document.querySelectorAll('[aria-label*="' + now + '"]');
